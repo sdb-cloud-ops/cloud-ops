@@ -17,7 +17,7 @@
           url: "about#Support"
     - title: "News"
       url: "news"
-    - title: "S2 AWS"
+    - title: "Singlestore"
       url: "docs/S2_AWS/s2"
 - title: "Extras"
   url: "docs/extras"
