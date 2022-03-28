@@ -12,8 +12,13 @@
           url: "docs/getting-started#customization"
     - title: "About"
       url: "about"
+      children:
+        - title: Support
+          url: "about#Support"
     - title: "News"
       url: "news"
+    - title: "S2 AWS"
+      url: "docs/S2_AWS/s2"
 - title: "Extras"
   url: "docs/extras"
   links:
