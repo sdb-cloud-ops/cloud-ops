@@ -6,6 +6,14 @@ excluded_in_search: true
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i";
 @fa-font-path: "../webfonts";
 
+.center {
+   margin: auto;
+   width: 60%;
+   /*border: 5px solid #FFFF00;*/
+   padding: 10px;
+   display: flex;
+   justify-content: center;
+}
 .gh-source {
     display: block;
     padding-right: 1.2rem;
