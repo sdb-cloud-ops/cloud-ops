@@ -1,5 +1,7 @@
 ---
 title: Deploy SingleStore with Google Cloud Kubernetes Engine
+tags:
+ - GCP
 #description: An example of a nested page
 ---
 

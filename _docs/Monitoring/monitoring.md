@@ -1,6 +1,8 @@
 ---
 title: Monitoring page
-description: Monitoring page
+tags:
+ - Monitoring
+#description: Monitoring page
 ---
 
 # Monitoring SingleStore on Kubernetes
