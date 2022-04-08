@@ -6,8 +6,8 @@ tags:
 description: Getting started with Docsy Jekyll
 ---
 
-[AWS](AWS/deploying)
+[Deploy SingleStore on AWS](AWS/deploying)
 
-[GCP](GCP/deploying)
+[Deploy SingleStore on GCP](GCP/deploying)
 
-[Azure](Azure/deploying)
+[Deploy SingleStore on Azure](Azure/deploying)
