@@ -3,6 +3,7 @@ title: AWS deploying page
 tags:
  - AWS
 #description: An example of a nested page
+permalink: /docs/Deploying/AWS/
 ---
 
 # AWS deploying page
