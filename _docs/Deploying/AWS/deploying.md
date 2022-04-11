@@ -2,7 +2,6 @@
 title: Deploy SingleStore on AWS
 tags:
  - AWS
-permalink: /docs/Deploying/AWS/
 ---
 
 # AWS deploying page
