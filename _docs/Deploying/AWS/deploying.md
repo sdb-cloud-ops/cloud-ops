@@ -1,5 +1,5 @@
 ---
-title: AWS deploying page
+title: Deploy SingleStore on AWS
 tags:
  - AWS
 #description: An example of a nested page
