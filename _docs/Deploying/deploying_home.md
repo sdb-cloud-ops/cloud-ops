@@ -4,7 +4,6 @@ tags:
  - jekyll
  - github
 description: Getting started with Docsy Jekyll
-permalink: /docs/Deploying/AWS/
 ---
 
 [Deploy SingleStore on AWS](AWS/deploying)
