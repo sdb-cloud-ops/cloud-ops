@@ -4,7 +4,7 @@ title: Technical Guides
 permalink: /docs/
 ---
 
-# Documentation
+# Technical Guides
 
 Welcome to the {{ site.title }} Documentation pages! Here you can quickly jump to a 
 particular page.
