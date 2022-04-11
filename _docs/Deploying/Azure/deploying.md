@@ -3,7 +3,6 @@ title: Deploy SingleStore with Azure Kubernetes Service
 tags:
  - Azure
 #description: An example of a nested page
-permalink: /docs/Deploying/Azure/
 ---
 
 # Deploy SingleStore with Azure Kubernetes Service
