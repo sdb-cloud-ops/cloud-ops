@@ -2,7 +2,6 @@
 title: Deploy SingleStore with Google Cloud Kubernetes Engine
 tags:
  - GCP
-permalink: /docs/Deploying/GCP/
 ---
 
 # Deploy SingleStore with Google Cloud Kubernetes Engine
