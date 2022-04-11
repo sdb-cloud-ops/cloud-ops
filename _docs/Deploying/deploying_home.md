@@ -3,7 +3,6 @@ title: Getting Started
 tags:
  - jekyll
  - github
-permalink: /docs/Deploying/
 ---
 
 [Deploy SingleStore on AWS](AWS/deploying)
