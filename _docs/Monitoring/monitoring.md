@@ -3,7 +3,6 @@ title: Monitoring page
 tags:
  - Monitoring
 #description: Monitoring page
-permalink: /docs/Monitoring/
 ---
 
 # Monitoring SingleStore on Kubernetes
