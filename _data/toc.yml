@@ -30,17 +30,17 @@
   url: docs
   links:
     - title: "Deploying"
-      url: "docs/Deploying/deploying_home"
+      url: "docs/Deploying_dir/deploying_home"
       children:
         - title: AWS
-          url: "docs/Deploying/AWS/deploying"
+          url: "docs/Deploying_dir/AWS_dir/deploying"
         - title: GCP
-          url: "docs/Deploying/GCP/deploying"
+          url: "docs/Deploying_dir/GCP_dir/deploying"
         - title: Azure
-          url: "docs/Deploying/Azure/deploying"
+          url: "docs/Deploying_dir/Azure_dir/deploying"
     - title: "Monitoring"
-      url: "docs/Monitoring/monitoring"
+      url: "docs/Monitoring_dir/monitoring"
     - title: "Scaling"
-      url: "docs/Scaling/scaling"
+      url: "docs/Scaling_dir/scaling"
     - title: "Disaster Recovery"
-      url: "docs/Disaster Recovery/disaster_recovery"
+      url: "docs/Disaster Recovery_dir/disaster_recovery"
