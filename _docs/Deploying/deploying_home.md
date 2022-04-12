@@ -6,7 +6,7 @@ tags:
 description: Getting started
 ---
 
-
+## AWS
 [Deploy SingleStore on AWS](AWS/deploying)
 
 [Deploy SingleStore on GCP](GCP/deploying)
