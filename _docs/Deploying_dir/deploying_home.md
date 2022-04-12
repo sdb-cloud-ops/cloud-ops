@@ -3,7 +3,7 @@ title: Getting Started
 tags:
  - jekyll
  - github
-description: Getting started
+description: Getting started 1
 ---
 
 [Deploy SingleStore on AWS](AWS/deploying)
