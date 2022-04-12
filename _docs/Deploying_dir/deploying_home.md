@@ -6,8 +6,8 @@ tags:
 description: Getting started 1
 ---
 
-[Deploy SingleStore on AWS](AWS/deploying)
+# [Deploy SingleStore on AWS](AWS/deploying)
 
-[Deploy SingleStore on GCP](GCP/deploying)
+## [Deploy SingleStore on GCP](GCP/deploying)
 
-[Deploy SingleStore on Azure](Azure/deploying)
+### [Deploy SingleStore on Azure](Azure/deploying)
