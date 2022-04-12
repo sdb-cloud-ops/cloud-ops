@@ -31,13 +31,13 @@
   links:
     - title: "Deploying"
       url: "docs/Deploying/deploying_home"
-      children:
-        - title: AWS
-          url: "docs/Deploying/AWS/deploying"
-        - title: GCP
-          url: "docs/Deploying/GCP/deploying"
-        - title: Azure
-          url: "docs/Deploying/Azure/deploying"
+#      children:
+#        - title: AWS
+#          url: "docs/Deploying/AWS/deploying"
+#        - title: GCP
+#          url: "docs/Deploying/GCP/deploying"
+#        - title: Azure
+#          url: "docs/Deploying/Azure/deploying"
     - title: "Monitoring"
       url: "docs/Monitoring/monitoring"
     - title: "Scaling"
