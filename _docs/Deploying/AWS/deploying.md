@@ -1,10 +1,10 @@
 ---
-title: Deploy SingleStore on AWS
+title: Deploy SingleStore with Amazon Web Service
 tags:
  - AWS
 ---
 
-# AWS deploying page
+# Deploy SingleStore with Amazon Web Service
 
 AWS deploying page - AWS/_docs/Deploying/AWS/deploying.md
 
