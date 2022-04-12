@@ -3,7 +3,7 @@ title: Getting Started
 tags:
  - jekyll
  - github
-description: Getting started 1
+description: Getting started
 ---
 
 
