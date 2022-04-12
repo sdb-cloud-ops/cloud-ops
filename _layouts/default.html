@@ -25,7 +25,7 @@
             <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
 	      <ol class="breadcrumb spb-1">
               {% assign crumbs = page.url | append: "/"  | replace: '//', '/' | split: '/' %}
-              {% for crumb in crumbs offset: 1 %}{% if crumb != "index" or crumb != "_dir" %}{% if forloop.last %}
+              {% for crumb in crumbs offset: 1 %}{% if crumb != "index" or unless crumb contains "_dir" %}{% if forloop.last %}
                 <li class="breadcrumb-item active" aria-current="page">
 	          <a href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a>
                 </li>{% else %}
