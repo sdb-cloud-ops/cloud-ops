@@ -51,98 +51,103 @@
 
                     <!--<a href="{{ page.url }}">{{ page_url_var }}</a>-->
 
-                    {% assign break_loop_section = false %}
-                    {% assign break_loop_entry = false %}
+                    {% if page_url_var == "/" %}
+                    {% else %}
+                        {% assign break_loop_section = false %}
+                        {% assign break_loop_entry = false %}
 
-                    {% for section in site.data.toc %}
-                        <!------------------->
-                        {% assign section_url_var = section.url | prepend: "/" | replace: '//', '/' | rstrip %}
+                        {% for section in site.data.toc %}
+                            <!------------------->
+                            {% assign section_url_var = section.url | prepend: "/" | replace: '//', '/' | rstrip %}
 
-                        <!-- the below variable is created specidifically to check /docs condition. the url is coming as /docs/ -->
-                        {% assign section_url_var2 = section.url | prepend: "/" | append: "/" | replace: '//', '/' | rstrip %}
+                            <!-- the below variable is created specidifically to check /docs condition. the url is coming as /docs/ -->
+                            {% assign section_url_var2 = section.url | prepend: "/" | append: "/" | replace: '//', '/' | rstrip %}
 
-                        {% assign section_title_var = section.title %}
-                        <!--{{ page_url_var }}^^^{{ section_url_var }}^^^{{ section_url_var2 }}^^^{{ section_title_var }}-->
+                            {% assign section_title_var = section.title %}
+                            <!--{{ page_url_var }}^^^{{ section_url_var }}^^^{{ section_url_var2 }}^^^{{ section_title_var }}-->
 
-                        {% if page_url_var == section_url_var or page_url_var == section_url_var2 %}
-                            <!--abc-->
-                            {% assign entry_title_var = "" %}
-                            {% assign entry_url_var = "" %}
-                            {% assign child_title_var = "" %}
-                            {% assign child_url_var = "" %}
-                        {% else %}
-                            <!--def-->
-                            {% if section.links %}
-                                {% for entry in section.links %}
-                                    <!--****************-->
-                                    {% assign entry_title_var = entry.title %}
-                                    {% assign entry_url_var = entry.url | prepend: "/" | replace: '//', '/' | rstrip %}
-                                    <!--{{ entry_title_var }}^^^{{ entry_url_var }}-->
+                            {% if page_url_var == section_url_var or page_url_var == section_url_var2 %}
+                                <!--abc-->
+                                {% assign entry_title_var = "" %}
+                                {% assign entry_url_var = "" %}
+                                {% assign child_title_var = "" %}
+                                {% assign child_url_var = "" %}
+                            {% else %}
+                                <!--def-->
+                                {% if section.links %}
+                                    {% for entry in section.links %}
+                                        <!--****************-->
+                                        {% assign entry_title_var = entry.title %}
+                                        {% assign entry_url_var = entry.url | prepend: "/" | replace: '//', '/' | rstrip %}
+                                        <!--{{ entry_title_var }}^^^{{ entry_url_var }}-->
 
-                                    {% if entry_url_var == page_url_var %}
-                                        <!--@@@@@@@@@@@@@@@@@@@@@-->
-                                        {% assign break_loop_section = true %}
-                                        {% assign break_loop_entry = true %}
-                                        {% assign child_title_var = "" %}
-                                        {% assign child_url_var = "" %}
-                                    {% break %}
-                                    {% else %}
-                                        <!--%%%%%%%%%%%%%%%%%%%%%-->
-                                        {% if entry.children %}
-                                            <!--&&&&&&&&&&&&&&&&&&-->
-                                            {% for child in entry.children %}
-                                                {% assign child_title_var = child.title %}
-                                                {% assign child_url_var = child.url | prepend: "/" | replace: '//', '/' | rstrip %}
-                                                <!--{{ child_title_var }}!!!{{ child_url_var }}!!!{{ page_url_var }}-->
-                                                {% if child_url_var == page_url_var %}
-                                                    <!--@@@@@@@@@@@@@@@@@@@@@-->
-                                                    {% assign break_loop_section = true %}
-                                                    {% assign break_loop_entry = true %}
-                                                {% break %}
-                                                {% else %}
-                                                    <!--%%%%%%%%%%%%%%%%%%%%%-->
-                                                    <!--<a href="{% if child.url %}{{ site.baseurl }}/{{ child.url }}{% else %}{{ child.external_url }}{% endif %}">{{ child.title }}</a>-->
-                                                {% endif %}
-                                            {% endfor %}
+                                        {% if entry_url_var == page_url_var %}
+                                            <!--@@@@@@@@@@@@@@@@@@@@@-->
+                                            {% assign break_loop_section = true %}
+                                            {% assign break_loop_entry = true %}
+                                            {% assign child_title_var = "" %}
+                                            {% assign child_url_var = "" %}
+                                        {% break %}
+                                        {% else %}
+                                            <!--%%%%%%%%%%%%%%%%%%%%%-->
+                                            {% if entry.children %}
+                                                <!--&&&&&&&&&&&&&&&&&&-->
+                                                {% for child in entry.children %}
+                                                    {% assign child_title_var = child.title %}
+                                                    {% assign child_url_var = child.url | prepend: "/" | replace: '//', '/' | rstrip %}
+                                                    <!--{{ child_title_var }}!!!{{ child_url_var }}!!!{{ page_url_var }}-->
+                                                    {% if child_url_var == page_url_var %}
+                                                        <!--@@@@@@@@@@@@@@@@@@@@@-->
+                                                        {% assign break_loop_section = true %}
+                                                        {% assign break_loop_entry = true %}
+                                                    {% break %}
+                                                    {% else %}
+                                                        <!--%%%%%%%%%%%%%%%%%%%%%-->
+                                                        <!--<a href="{% if child.url %}{{ site.baseurl }}/{{ child.url }}{% else %}{{ child.external_url }}{% endif %}">{{ child.title }}</a>-->
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+
+                                            <!--<a href="{% if child.url %}{{ site.baseurl }}/{{ child.url }}{% else %}{{ child.external_url }}{% endif %}">{{ child.title }}</a>-->
                                         {% endif %}
 
-                                        <!--<a href="{% if child.url %}{{ site.baseurl }}/{{ child.url }}{% else %}{{ child.external_url }}{% endif %}">{{ child.title }}</a>-->
-                                    {% endif %}
 
 
+                                        {% if break_loop_entry %}
+                                        {% break %}
+                                        {% endif %}
 
-                                    {% if break_loop_entry %}
-                                    {% break %}
-                                    {% endif %}
-
-                                {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
+
+                            {% if break_loop_section %}
+                            {% break %}
+                            {% endif %}
+
+                        {% endfor %}
+                        <!--###############-->
+                        <!--{{ section_title_var }}^^^{{ section_url_var }}-->
+                        {% if section_url_var != "" and section_title_var != "" %}
+                            <li class="breadcrumb-item">
+                                <a href="{{ site.url }}{{ site.baseurl }}{{ section_url_var }}">{{ section_title_var }}</a>
+                            </li>
+                        {% endif %}
+                        <!--###############-->
+                        <!--^^^{{ entry_title_var }}^^^{{ entry_url_var }}-->
+                        {% if entry_url_var != "" and entry_title_var != "" %}
+                            <li class="breadcrumb-item">
+                                <a href="{{ site.url }}{{ site.baseurl }}{{ entry_url_var }}">{{ entry_title_var }}</a>
+                            </li>
                         {% endif %}
 
-                        {% if break_loop_section %}
-                        {% break %}
+                        <!--###############-->
+                        <!--{{ child_title_var }}^^^{{ child_url_var }}-->
+                        {% if child_url_var != "" and child_title_var != "" %}
+                            <li class="breadcrumb-item">
+                                <a href="{{ site.url }}{{ site.baseurl }}{{ child_url_var }}">{{ child_title_var }}</a>
+                            </li>
                         {% endif %}
-
-                    {% endfor %}
-                    <!--###############-->
-                    <!--{{ section_title_var }}^^^{{ section_url_var }}-->
-                    <li class="breadcrumb-item">
-                        <a href="{{ site.url }}{{ site.baseurl }}{{ section_url_var }}">{{ section_title_var }}</a>
-                    </li>
-                    <!--###############-->
-                    <!--^^^{{ entry_title_var }}^^^{{ entry_url_var }}-->
-                    {% if entry_url_var != "" and entry_title_var != "" %}
-                        <li class="breadcrumb-item">
-                            <a href="{{ site.url }}{{ site.baseurl }}{{ entry_url_var }}">{{ entry_title_var }}</a>
-                        </li>
-                    {% endif %}
-
-                    <!--###############-->
-                    <!--{{ child_title_var }}^^^{{ child_url_var }}-->
-                    {% if child_url_var != "" and child_title_var != "" %}
-                        <li class="breadcrumb-item">
-                            <a href="{{ site.url }}{{ site.baseurl }}{{ child_url_var }}">{{ child_title_var }}</a>
-                        </li>
                     {% endif %}
 
 <!--
