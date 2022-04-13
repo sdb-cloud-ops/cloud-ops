@@ -6,10 +6,10 @@ tags:
 description: Getting started
 ---
 
-[Deploy SingleStore on AWS](AWS_dep/deploying)
+[Deploy SingleStore on AWS](AWS/deploying)
 
-[Deploy SingleStore on GCP](GCP_dep/deploying)
+[Deploy SingleStore on GCP](GCP/deploying)
 
-[Deploy SingleStore on Azure](Azure_dep/deploying)
+[Deploy SingleStore on Azure](Azure/deploying)
 
 
