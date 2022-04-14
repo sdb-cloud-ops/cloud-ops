@@ -1,7 +1,7 @@
 ---
 title: SingleStore installation
 tags:
- - installation
+ - Installation
 description: Installing SingleStore on public cloud providers
 ---
 
