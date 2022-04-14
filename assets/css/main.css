@@ -12704,6 +12704,15 @@ a.text-dark:focus {
     content: "\f1d2"
 }
 
+.box0 {
+    margin-bottom:1em;
+    height:4em;
+}
+
+.fa-jira:before {
+    content: "\f7b1"
+}
+
 .fa-github:before {
     content: "\f09b"
 }
