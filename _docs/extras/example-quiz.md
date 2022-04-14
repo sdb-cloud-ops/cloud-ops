@@ -1,6 +1,8 @@
 ---
 title: Quiz
 description: How to add interactive quizzes to your site.
+layout: null
+excluded_in_search: true
 ---
 
 # Quizzes
