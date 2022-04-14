@@ -55,6 +55,7 @@
                     {% else %}
                         {% assign break_loop_section = false %}
                         {% assign break_loop_entry = false %}
+                        {% assign url_match_found = "no" %}
 
                         {% for section in site.data.toc %}
                             <!------------------->
@@ -72,6 +73,7 @@
                                 {% assign entry_url_var = "" %}
                                 {% assign child_title_var = "" %}
                                 {% assign child_url_var = "" %}
+                                {% assign url_match_found = "yes" %}
                             {% else %}
                                 <!--def-->
                                 {% if section.links %}
@@ -87,6 +89,7 @@
                                             {% assign break_loop_entry = true %}
                                             {% assign child_title_var = "" %}
                                             {% assign child_url_var = "" %}
+                                            {% assign url_match_found = "yes" %}
                                         {% break %}
                                         {% else %}
                                             <!--%%%%%%%%%%%%%%%%%%%%%-->
@@ -100,6 +103,7 @@
                                                         <!--@@@@@@@@@@@@@@@@@@@@@-->
                                                         {% assign break_loop_section = true %}
                                                         {% assign break_loop_entry = true %}
+                                                        {% assign url_match_found = "yes" %}
                                                     {% break %}
                                                     {% else %}
                                                         <!--%%%%%%%%%%%%%%%%%%%%%-->
@@ -128,14 +132,14 @@
                         {% endfor %}
                         <!--###############-->
                         <!--{{ section_title_var }}^^^{{ section_url_var }}-->
-                        {% if section_url_var != "" and section_title_var != "" %}
+                        {% if section_url_var != "" and section_title_var != "" and url_match_found == "yes" %}
                             <li class="breadcrumb-item">
                                 <a href="{{ site.url }}{{ site.baseurl }}{{ section_url_var }}">{{ section_title_var }}</a>
                             </li>
                         {% endif %}
                         <!--###############-->
                         <!--^^^{{ entry_title_var }}^^^{{ entry_url_var }}-->
-                        {% if entry_url_var != "" and entry_title_var != "" %}
+                        {% if entry_url_var != "" and entry_title_var != "" and url_match_found == "yes" %}
                             <li class="breadcrumb-item">
                                 <a href="{{ site.url }}{{ site.baseurl }}{{ entry_url_var }}">{{ entry_title_var }}</a>
                             </li>
@@ -143,7 +147,7 @@
 
                         <!--###############-->
                         <!--{{ child_title_var }}^^^{{ child_url_var }}-->
-                        {% if child_url_var != "" and child_title_var != "" %}
+                        {% if child_url_var != "" and child_title_var != "" and url_match_found == "yes" %}
                             <li class="breadcrumb-item">
                                 <a href="{{ site.url }}{{ site.baseurl }}{{ child_url_var }}">{{ child_title_var }}</a>
                             </li>
