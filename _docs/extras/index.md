@@ -3,6 +3,8 @@ title: Extras
 description: Extras, including quizzes.
 tags:
  - survey
+layout: null
+excluded_in_search: true
 ---
 
 # Extras
