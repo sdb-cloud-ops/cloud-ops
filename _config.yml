@@ -34,6 +34,9 @@ github_user: "vsoch"
 github_repo: "docsy-jekyll"
 github_branch: "master"
 
+# Cloud ops team jira help ticket
+jira_help: "https://memsql.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=11934&issuetype=10005&summary=Title%20goes%20here&description=Description%20goes%20here&priority=3"
+
 # Optional
 twitter: vsoch
 linkedin: vsochat
