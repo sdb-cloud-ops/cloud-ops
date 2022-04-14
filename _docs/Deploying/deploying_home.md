@@ -1,9 +1,8 @@
 ---
-title: Getting Started
+title: SingleStore installation
 tags:
- - jekyll
- - github
-description: Getting started
+ - installation
+description: Installing SingleStore on public cloud providers
 ---
 
 [Deploy SingleStore on AWS](AWS/deploying)
