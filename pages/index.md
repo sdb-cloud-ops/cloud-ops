@@ -1,6 +1,6 @@
 ---
 layout: page
-title: CloudOps Docs
+title: CloudOps Documentation
 permalink: /
 ---
 
