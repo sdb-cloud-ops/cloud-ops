@@ -190,6 +190,6 @@ This concludes setting up SingleStore with Azure Kubernetes Engine.
  
  
 ## Deployment Artifacts
-Deployment related files can be found at - https://github.com/sdb-cloud-ops/Azure
+Deployment related files can be found at [https://github.com/sdb-cloud-ops/Azure](https://github.com/sdb-cloud-ops/Azure)
  - k8s operator yamls
  - terraform scripts
