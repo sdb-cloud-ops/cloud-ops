@@ -152,3 +152,9 @@ The IP address under `EXTERNAL-IP` in the `svc-memsql-cluster-ddl` row is the on
 mysql -h<ip-address> -uadmin -P3306 -p<secretpass>
 ```
 This concludes setting up SingleStore with Google Cloud Kubernetes Engine.
+
+
+## Deployment Artifacts
+Deployment related files can be found at [https://github.com/sdb-cloud-ops/GCP](https://github.com/sdb-cloud-ops/GCP)
+ - k8s operator yamls
+ - terraform scripts
