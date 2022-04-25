@@ -421,17 +421,17 @@ kind: MemsqlCluster
 metadata:
   name: memsql-cluster
 spec:
-  # TODO: paste your license key from https://portal.singlestore.com here:
+  \# TODO: paste your license key from https://portal.singlestore.com here:
   license: REPLACE_THIS_WITH_LICENSE
 
-  # TODO: replace the default admin password for production environment
-  # select password("secret");
+  \# TODO: replace the default admin password for production environment
+  \# select password("secret");
   adminHashedPassword: "*14E65567ABDB5135D0CFD9A70B3032C179A49EE7"
   nodeImage:
     repository: memsql/node
     tag: latest
 
-  # TODO: set greater than 1 to enable HA mode
+  \# TODO: set greater than 1 to enable HA mode
   redundancyLevel: 1
   serviceSpec:
     objectMetaOverrides:
@@ -795,9 +795,9 @@ You need to modify pvc section:
 storageClassName > your default storage class name available in your k8s environment
 existingClaim > you need it if you have more than one pvc for grafana
 cat > grafana.yaml <<EOF
-# Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
-# or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
-# ref: http://kubernetes.io/docs/user-guide/services/
+\# Expose the grafana service to be accessed from outside the cluster (LoadBalancer service).
+\# or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+\# ref: http://kubernetes.io/docs/user-guide/services/
 ##
 service:
   enabled: true
@@ -808,8 +808,8 @@ service:
   selector:
     app.kubernetes.io/name: grafana
     app.kubernetes.io/instance: grafana
-# Enable persistence using Persistent Volume Claims
-# ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+\# Enable persistence using Persistent Volume Claims
+\# ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
 persistence:
   type: pvc
@@ -820,9 +820,9 @@ persistence:
   size: 5Gi
   finalizers:
     - kubernetes.io/pvc-protection
-  # selectorLabels: {}
-  # subPath: ""
-  # existingClaim: grafana
+  \# selectorLabels: {}
+  \# subPath: ""
+  \# existingClaim: grafana
 EOF
 Install Grafana in Kubernetes environment using helm
 helm install grafana grafana/grafana -nmemsql -f grafana.yaml
