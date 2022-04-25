@@ -6,9 +6,9 @@ tags:
 
 # Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)
 
-### Introduction
+ Introduction
 Use these steps to deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)
-### Summary
+## Summary
 SingleStore’s Cluster Management in kubernetes is different from native deployment. All jobs related to cluster management are done by operators.
 Reference: https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html
 
@@ -20,8 +20,8 @@ sdb-deploy. Installs memsqlctl and the SingleStore DB database engine to host ma
 sdb-admin. Helps you manage a SingleStore DB cluster.
 sdb-report. Collects and performs diagnostic checks on your cluster.
 memsqlctl. Provides lower-level access to manage nodes on a host machine.
-### EKS Cluster
-## Prerequisite
+## EKS Cluster
+### Prerequisite
 Role
 Create two roles
 Cluster IAM Role
@@ -131,7 +131,7 @@ Add permission
 Choose Attach existing policies directly.
 Attach eks-policy to users.
 
-## Create the Cluster
+### Create the Cluster
 Reference: https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli
 Define
 region-code
@@ -149,13 +149,13 @@ aws eks create-cluster \
   --resources-vpc-config subnetIds=subnetId1,subnetId2
 
 This process may take several minutes.
-## Access the Cluster
+### Access the Cluster
 Connect kubectl
 aws eks update-kubeconfig --region us-east-1 --name eks-cluster
 Verify
 kubectl get node -owide
 
-## Delete VPC CNI
+### Delete VPC CNI
 Reference: https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/
 Cilium will manage ENIs instead of VPC CNI, so the aws-node DaemonSet has to be deleted to prevent conflict behavior.
 kubectl -n kube-system delete daemonset aws-node
@@ -163,7 +163,7 @@ kubectl -n kube-system delete daemonset aws-node
 Wait the cluster creation complete if you above result
 
 You can continue to the next step using kubectl command
-## Deploy Cilium as CNI
+### Deploy Cilium as CNI
 Reference: https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium
 Setup Helm repository:
 helm repo add cilium https://helm.cilium.io/
@@ -184,7 +184,7 @@ region-code
 cluster-name
 account_id
 subnetId
-## Create node group
+### Create node group
 Use space as delimiter if you have more than one subnet
 Create node group with the following command:
 aws eks create-nodegroup \
@@ -197,7 +197,7 @@ aws eks create-nodegroup \
 --node-role arn:aws:iam::[accountId]:role/AmazonEKSNodeRole
 
 This process may take several minutes.
-## Verification
+### Verification
 Ensure the node’s status is Ready and all pod’s status Running.
 kubectl get nodes
 kubectl get po -A
@@ -205,8 +205,8 @@ kubectl get po -A
 In cilium operator logs show Initialization complete
 kubectl logs [cilium-operator-pod-name] -nkube-system --tail 10
 
-### SingleStore
-## Cluster Admin Prerequisites
+## SingleStore
+### Cluster Admin Prerequisites
 Determine the project (namespace) in which to deploy SingleStore DB.
 Determine which StorageClass (SC) to use.
 Avoid using a StorageClass with an NFS-based provisioner. Ideally, you should choose a StorageClass that uses a block storage-based provisioner that supports volume expansion and the WaitForFirstConsumer binding mode.
@@ -214,14 +214,14 @@ Avoid using a StorageClass with an NFS-based provisioner. Ideally, you should ch
 Available SC in EKS:
 
 Determine the fsGroup to use for the deployment.
-## Deployment Prerequisites
+### Deployment Prerequisites
 Obtain a SingleStore license from the SingleStore Customer Portal.
 Select the SingleStore DB images to use. Two Docker images are required for the deployment.
 The node image is the SingleStore DB database engine and can be found on Docker Hub.
 The Operator image is used to manage the SingleStore DB engine deployment in Kubernetes environment, and can also be found on Docker Hub.
 Use the StorageClass that you selected in Cluster Admin Prerequisites.
 Substitute the fsGroup value with the value you copied in Cluster Admin Prerequisites.
-## Create the Object Definition Files
+### Create the Object Definition Files
 The following are definition files that will be used by the Operator to create your cluster. Create new definition files and copy and paste the contents of each code block into those files.
 deployment.yaml
 rbac.yaml
@@ -460,7 +460,7 @@ spec:
       labels:
         optional: label
 EOF
-## Deploy a SingleStore DB Cluster
+### Deploy a SingleStore DB Cluster
 Reference: Deploy a SingleStore DB Cluster
 Now that your various object definition files are created, you will use kubectl to do the actual object creation and cluster deployment.
 Install the RBAC resources.
@@ -478,7 +478,7 @@ kubectl get pods
 If you see no pods are in the Running state, check the Operator logs by running 
 kubectl logs deployment memsql-operator -n<namespace>
 then look at the various objects to see what is failing.
-## Verification
+### Verification
 Verify the cluster
 kubectl get memsqlcluster memsql-cluster \
 -o=jsonpath='{.status.phase}{"\n"}' -n<name-space>
@@ -503,7 +503,7 @@ Service name   External IP   Service Port:Node Port       Service created
 
 Refer to Data Definition Language DDL and Data Manipulation Language DML for more information.
 
-## Install SingleStore Client
+### Install SingleStore Client
 Add the SingleStore repository to your repository list.
 sudo yum-config-manager --add-repo https://release.memsql.com/production/rpm/x86_64/repodata/memsql.repo
 Verify that the SingleStore repo information is listed under repolist.
@@ -515,7 +515,7 @@ Skip this step if you have it
 sudo yum install -y which
 Install the SingleStore client.
 sudo yum install -y singlestore-client
-## Access SingleStore DB
+### Access SingleStore DB
 Connect via Load Balancer / External IP (refer svc-memsql-cluster-ddl endpoint)
 singlestore -u admin -h <external-ip> -p
 
@@ -531,9 +531,9 @@ show aggregators;
 show leaves;
 The result may vary:
 
-### Scaling
+## Scaling
 We need to modify the resource only. All jobs are done by operators. You need to monitor the log of the pod operator during scaling to identify if the scaling is in progress, done or has a problem.
-## Prerequisites
+### Prerequisites
 Ensure the backup operator is running and the backup file exists.
 Get the memsql cluster
 kubectl get memsqlcluster -n<namespace>
@@ -555,7 +555,7 @@ Monitor the pod during scaling
 Open a new terminal window
 watch kubectl get po -n<namespace>
 
-## Horizontal Scaling
+### Horizontal Scaling
 Increasing the number of cluster nodes. Adding an aggregator or leaf nodes.
 Create scaling patch file:
 cat > scaling.yaml <<EOF
@@ -572,7 +572,7 @@ Verification
 New leaves pod created
 kubectl get po -n<namespace>
 
-## Vertical Scaling
+### Vertical Scaling
 Increasing node’s resources,  such as cpu, memory or storage.
 CPU & Memory
 Requirement:
@@ -664,13 +664,13 @@ Result:
 The pod will be deleted
 PVC will be resized
 The new pod will recreate
-### Monitoring
+## Monitoring
 Reference: https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html
-## Introduction
+### Introduction
 SingleStore’s native monitoring solution is designed to capture and reveal SingleStore DB cluster events over time. By analyzing this event data, you can identify trends and, if necessary, take action to remediate issues. Use these steps to Configure SingleStore DB Monitoring in Kubernetes Environment.
-## Terminology
+### Terminology
 Throughout this guide, the cluster that is being monitored will be referred to as the “Source” cluster, and the cluster that stores the monitoring data will be referred to as the “Metrics” cluster. The databases that store monitoring data will be referred to as the metrics database.
-## High-Level Architecture
+### High-Level Architecture
 
 In SingleStore’s native monitoring solution, the Metrics cluster utilizes a SingleStore pipeline to pull the data from the exporter process on the Source cluster and stores it in a database named metrics. Note that this metrics database can either reside within the same cluster as the Source cluster, or within a dedicated cluster.
 When these event data is then analyzed through the associated Grafana dashboards, trends can be identified and, if necessary, actions taken to remediate issues.
@@ -694,14 +694,14 @@ System metrics from each host in the cluster
 Node drilldown
 System metrics from each host in the cluster, with the ability to focus on a specific metric subsystem
 
-## Prerequisites
+### Prerequisites
 A SingleStore DB 7.3 or later cluster to monitor (the Source cluster).
 Optional: A separate SingleStore DB 7.3 or later cluster to collect monitoring data (the Metrics cluster).
 This can be the same as, or separate from, the Source cluster.
 If you opt to use a separate cluster, we recommend a cluster with two aggregator nodes and two leaf nodes, each with 2TB disks and with high availability (HA) enabled.
 A Grafana 6.0.0 or later instance that can access the Metrics cluster.
 
-## Port Configuration
+### Port Configuration
 Default Port
 Used by
 Invoked by
@@ -719,7 +719,7 @@ memsql_exporter
 SingleStore pipelines
 
 
-## Identify Exporter Process
+### Identify Exporter Process
 Check the exporter’s port
 kubectl exec -it <master-pod> -n<namespace> -- curl -v telnet://node-memsql-cluster-master-0:9104
 Sample output:
@@ -728,7 +728,7 @@ Test the metrics
 curl http://node-memsql-cluster-master-0:9104
 Sample output:
 
-## Configure the metrics Database
+### Configure the metrics Database
 Create the metrics database and associated tables
 Download the sql file below, extract and run in metric DB.
 metrics-database-ddl_73.sql
@@ -785,7 +785,7 @@ DROP PIPELINE metrics;
 
 Sample output:
 
-## Grafana
+### Grafana
 Setup
 We will install grafana using helm chart
 Add grafana repo
@@ -884,8 +884,8 @@ Click Import button
 
 View the Dashboards
 When all cluster monitoring components are installed, configured, and running, the Grafana dashboards can be used to monitor SingleStore DB cluster health over time.
-### Rollback/Cleanup
-## AKS Cluster
+## Rollback/Cleanup
+### AKS Cluster
 Skip this step if you want to retain the AKS cluster for another application
 Login to Azure portal. 
 In Home page search for Kubernetes service.
@@ -898,7 +898,7 @@ Confirm the delete operation by pressing "Yes" button.
 
 Check the Delete operation status.
 
-## SingleStore DB
+### SingleStore DB
 Skip this step if you did the previous step (delete AKS cluster).
 Delete all Kubernetes object using helm command
 helm delete singlestore -n<namespaces>
@@ -912,8 +912,8 @@ Clean up the Namespaces
 Run the below command:
 kubectl delete ns <namespaces>
 
-### Useful Command
-## Kubernetes
+## Useful Command
+### Kubernetes
 Kubernetes object
 statefulsets, deployment, pod, memsqlcluster, pvc, pv
 
@@ -936,7 +936,7 @@ kubectl get pv -n memsql
 kubectl describe pv [pv name] -n memsql
 kubectl logs [pod name] -n memsql
 kubectl logs -f [pod name] -n<namespace>
-## SingleStore
+### SingleStore
 singlestore command need to run inside the master pod:
 
 Check license:
