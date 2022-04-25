@@ -6,7 +6,7 @@ tags:
 
 # Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)
 
- Introduction
+# Introduction
 Use these steps to deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)
 ## Summary
 SingleStore’s Cluster Management in kubernetes is different from native deployment. All jobs related to cluster management are done by operators.
