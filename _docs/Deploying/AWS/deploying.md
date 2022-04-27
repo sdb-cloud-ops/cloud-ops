@@ -475,7 +475,7 @@ Finally, create the cluster.
 kubectl create -f memsql-cluster.yaml
 After a couple minutes, run kubectl get pods again to verify the aggregator and leaf nodes all started and have a status of Running.
 kubectl get pods
-If you see no pods are in the Running state, check the Operator logs by running 
+If you see no pods are in the Running state, check the Operator logs by running
 kubectl logs deployment memsql-operator -n<namespace>
 then look at the various objects to see what is failing.
 ## Verification
@@ -751,10 +751,10 @@ Get the master host
 show aggregators;
 
 Create the pipeline
-CREATE OR REPLACE PIPELINE `metrics` AS 
-LOAD DATA prometheus_exporter 
-"<exporter-host:port>/cluster-metrics" 
-CONFIG '{"is_memsql_internal":true}' 
+CREATE OR REPLACE PIPELINE `metrics` AS
+LOAD DATA prometheus_exporter
+"<exporter-host:port>/cluster-metrics"
+CONFIG '{"is_memsql_internal":true}'
 INTO PROCEDURE `load_metrics` FORMAT JSON;
 Sample output:
 
@@ -766,10 +766,10 @@ Run the pipeline
 START PIPELINE IF NOT RUNNING metrics;
 The blobs pipeline
 Create the pipeline
-CREATE OR REPLACE PIPELINE `blobs` AS 
-LOAD DATA prometheus_exporter 
-"<exporter-host:port>/samples" 
-CONFIG '{"is_memsql_internal":true, "download_type":"samples", "monitoring_version": "7.3"}' 
+CREATE OR REPLACE PIPELINE `blobs` AS
+LOAD DATA prometheus_exporter
+"<exporter-host:port>/samples"
+CONFIG '{"is_memsql_internal":true, "download_type":"samples", "monitoring_version": "7.3"}'
 INTO PROCEDURE `load_blobs` FORMAT JSON;
 Sample output:
 
@@ -887,12 +887,12 @@ When all cluster monitoring components are installed, configured, and running, t
 # Rollback/Cleanup
 ## AKS Cluster
 Skip this step if you want to retain the AKS cluster for another application
-Login to Azure portal. 
+Login to Azure portal.
 In Home page search for Kubernetes service.
 
 Click on the Kubernetes Service and choose the Kubernetes Cluster you want to delete.
 
-Click on the Delete option on the right side top as shown in figure. 
+Click on the Delete option on the right side top as shown in figure.
 
 Confirm the delete operation by pressing "Yes" button.
 
@@ -907,7 +907,7 @@ Run the below command:
 kubectl delete pvc --all -n<namespaces>
 Clean up the CustomResourceDefinition
 Run the below command:
-kubectl delete crd MemsqlCluster 
+kubectl delete crd MemsqlCluster
 Clean up the Namespaces
 Run the below command:
 kubectl delete ns <namespaces>
