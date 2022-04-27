@@ -6,8 +6,6 @@ tags:
 
 **Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)**
 
-#  
-
 # Introduction
 
 Use these steps to deploy SingleStore DB in Amazon Elastic Kubernetes
