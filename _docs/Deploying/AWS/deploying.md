@@ -4,7 +4,7 @@ tags:
  - AWS
 ---
 
-**Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)**
+**Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)** 
 
 # Introduction
 
@@ -18,29 +18,29 @@ deployment. All jobs related to cluster management are done by
 operators.
 
 Reference:
-[[https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html]{.underline}](https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html)
+[[https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html]](https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html)
 
 User prohibited to use below command or tools:
 
 1.  [[Cluster management
-    > command]{.underline}](https://docs.singlestore.com/db/v7.6/en/reference/sql-reference/cluster-management-commands/cluster-management-commands.html)
+    > command]](https://docs.singlestore.com/db/v7.6/en/reference/sql-reference/cluster-management-commands/cluster-management-commands.html)
 
 2.  SingleStore DB Toolbox except sdb-report
 
-    a.  [[sdb-toolbox-config]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html).
+    a.  [[sdb-toolbox-config]](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html).
         > Performs host machine registration.
 
-    b.  [[sdb-deploy]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html).
+    b.  [[sdb-deploy]](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html).
         > Installs memsqlctl and the SingleStore DB database engine to
         > host machines in the cluster.
 
-    c.  [[sdb-admin]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html).
+    c.  [[sdb-admin]](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html).
         > Helps you manage a SingleStore DB cluster.
 
-    d.  [[sdb-report]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html).
+    d.  [[sdb-report]](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html).
         > Collects and performs diagnostic checks on your cluster.
 
-    e.  [[memsqlctl]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html).
+    e.  [[memsqlctl]](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html).
         > Provides lower-level access to manage nodes on a host machine.
 
 # EKS Cluster
@@ -54,10 +54,10 @@ Create two roles
 #### Cluster IAM Role
 
 Reference:
-[[https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html)
+[[https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html]](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html)
 
 3.  Open the IAM console at
-    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
+    > [[https://console.aws.amazon.com/iam/]](https://console.aws.amazon.com/iam/)
 
 4.  In the left navigation pane, choose **Roles**.
 
@@ -91,7 +91,7 @@ height="1.9444444444444444in"}
 height="2.5972222222222223in"}
 
 Reference:
-[[https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html)
+[[https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html]](https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html)
 
 Assign all \*EKS\* managed policy to the role
 
@@ -101,7 +101,7 @@ height="2.6944444444444446in"}
 #### Service IAM Role
 
 1.  Open the IAM console at
-    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
+    > [[https://console.aws.amazon.com/iam/]](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Roles**.
 
@@ -139,10 +139,10 @@ height="2.8055555555555554in"}
 #### Node IAM Role
 
 Reference:
-[[https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html)
+[[https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html]](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html)
 
 1.  Open the IAM console at
-    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
+    > [[https://console.aws.amazon.com/iam/]](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Roles**.
 
@@ -183,7 +183,7 @@ height="2.5416666666666665in"}
 ### Policy
 
 1.  Open the IAM console at
-    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
+    > [[https://console.aws.amazon.com/iam/]](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Policies**.
 
@@ -278,7 +278,7 @@ height="2.513888888888889in"}
 Create user service
 
 1.  Open the IAM console at
-    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
+    > [[https://console.aws.amazon.com/iam/]](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Users**.
 
@@ -301,7 +301,7 @@ height="1.9166666666666667in"}
 ## Create the Cluster
 
 Reference:
-[[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
+[[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli]](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
 
 1.  Define
 
@@ -351,7 +351,7 @@ kubectl get node -owide
 ## Delete VPC CNI
 
 Reference:
-[[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/]{.underline}](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/)
+[[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/]](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/)
 
 Cilium will manage ENIs instead of VPC CNI, so the aws-node DaemonSet
 has to be deleted to prevent conflict behavior.
@@ -371,7 +371,7 @@ You can continue to the next step using kubectl command
 ## Deploy Cilium as CNI
 
 Reference:
-[[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium]{.underline}](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium)
+[[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium]](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium)
 
 Setup Helm repository:
 
@@ -380,7 +380,7 @@ helm repo add cilium https://helm.cilium.io/
 This helm command sets eni=true and tunnel=disabled, meaning the Cilium
 will allocate a fully-routable AWS ENI IP address for each pod, similar
 to the behavior of the [[Amazon VPC CNI
-plugin]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html).
+plugin]](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html).
 
 Excluding the lines for eni=true, ipam.mode=eni and tunnel=disabled from
 the helm command will configure Cilium to use overlay routing mode.
@@ -406,7 +406,7 @@ helm install cilium cilium/cilium \--version 1.9.13 \\
 ## Create the Node Group
 
 Reference:
-[[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
+[[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli]](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
 
 1.  Define
 
@@ -486,19 +486,19 @@ height="0.4305555555555556in"}
 ## Deployment Prerequisites
 
 1.  Obtain a SingleStore license from the [[SingleStore Customer
-    > Portal]{.underline}](https://portal.singlestore.com).
+    > Portal]](https://portal.singlestore.com).
 
 2.  Select the SingleStore DB images to use. Two Docker images are
     > required for the deployment.
 
     a.  The node image is the SingleStore DB database engine and can be
         > found [[on Docker
-        > Hub]{.underline}](https://hub.docker.com/r/memsql/node/tags).
+        > Hub]](https://hub.docker.com/r/memsql/node/tags).
 
     b.  The Operator image is used to manage the SingleStore DB engine
         > deployment in Kubernetes environment, and can also be found
         > [[on Docker
-        > Hub]{.underline}](https://hub.docker.com/r/memsql/operator/tags).
+        > Hub]](https://hub.docker.com/r/memsql/operator/tags).
 
 3.  Use the StorageClass that you selected in *Cluster Admin
     > Prerequisites.*
@@ -512,13 +512,13 @@ The following are definition files that will be used by the Operator to
 create your cluster. Create new definition files and copy and paste the
 contents of each code block into those files.
 
--   [[deployment.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/deployment-yaml.html)
+-   [[deployment.yaml]](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/deployment-yaml.html)
 
--   [[rbac.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/rbac-yaml.html)
+-   [[rbac.yaml]](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/rbac-yaml.html)
 
--   [[memsql-cluster-crd.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-crd-yaml.html)
+-   [[memsql-cluster-crd.yaml]](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-crd-yaml.html)
 
--   [[memsql-cluster.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-yaml.html)
+-   [[memsql-cluster.yaml]](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-yaml.html)
 
 ###  
 
@@ -987,7 +987,7 @@ EOF
 ## Deploy a SingleStore DB Cluster
 
 Reference: [[Deploy a SingleStore DB
-Cluster]{.underline}](https://docs.singlestore.com/db/v7.3/en/deploy/kubernetes/deploy-a-singlestore-db-cluster.html)
+Cluster]](https://docs.singlestore.com/db/v7.3/en/deploy/kubernetes/deploy-a-singlestore-db-cluster.html)
 
 Now that your various object definition files are created, you will use
 kubectl to do the actual object creation and cluster deployment.
@@ -1081,9 +1081,9 @@ NAME EXTERNAL-IP PORT(S) AGE
 Service name External IP Service Port:Node Port Service created
 
 Refer to [[Data Definition Language
-DDL]{.underline}](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-definition-language-ddl/data-definition-language-ddl.html)
+DDL]](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-definition-language-ddl/data-definition-language-ddl.html)
 and [[Data Manipulation Language
-DML]{.underline}](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-manipulation-language-dml/data-manipulation-language-dml.html)
+DML]](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-manipulation-language-dml/data-manipulation-language-dml.html)
 for more information.
 
 #  
@@ -1461,7 +1461,7 @@ Result:
 # Monitoring
 
 Reference:
-[[https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html)
+[[https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html]](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html)
 
 ## Introduction
 
@@ -1583,7 +1583,7 @@ height="1.2916666666666667in"}
 
 Download the sql file below, extract and run in metric DB.
 
-[[metrics-database-ddl_73.sql]{.underline}](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/metrics-database-ddl_73.sql.zip)
+[[metrics-database-ddl_73.sql]](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/metrics-database-ddl_73.sql.zip)
 
 ### Create monitoring user
 
@@ -1892,7 +1892,7 @@ height="2.888888888888889in"}
 
 1.  Download the cluster monitoring dashboards from SingleStore and
     > extract the downloaded file
-    > [[cluster-monitoring-dashboards-73.zip]{.underline}](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/cluster-monitoring-dashboards-73.zip)
+    > [[cluster-monitoring-dashboards-73.zip]](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/cluster-monitoring-dashboards-73.zip)
 
 ![](media/image24.png){width="6.267716535433071in"
 height="1.8055555555555556in"}
@@ -1932,7 +1932,7 @@ Skip this step if you want to retain the AKS cluster for another
 application
 
 1.  Login to [[Azure
-    > portal]{.underline}](https://portal.azure.com/#home).
+    > portal]](https://portal.azure.com/#home).
 
 2.  In Home page search for Kubernetes service.
 
@@ -2048,8 +2048,6 @@ memsqlctl show-aggregators
 List leaves node:
 
 memsqlctl show-leaves
-
-
 
 # Deployment Artifacts
 Deployment related files can be found at [https://github.com/sdb-cloud-ops/AWS](https://github.com/sdb-cloud-ops/AWS)
