@@ -26,21 +26,16 @@ User prohibited to use below command or tools:
 
 2.  SingleStore DB Toolbox except sdb-report
 
-    a.  [sdb-toolbox-config](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html)
-        > Performs host machine registration.
+    a.  [sdb-toolbox-config](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html)  Performs host machine registration.
 
-    b.  [sdb-deploy](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html)
-        > Installs memsqlctl and the SingleStore DB database engine to
+    b.  [sdb-deploy](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html)  Installs memsqlctl and the SingleStore DB database engine to
         > host machines in the cluster.
 
-    c.  [sdb-admin](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html)
-        > Helps you manage a SingleStore DB cluster.
+    c.  [sdb-admin](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html)  Helps you manage a SingleStore DB cluster.
 
-    d.  [sdb-report](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html)
-        > Collects and performs diagnostic checks on your cluster.
+    d.  [sdb-report](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html)  Collects and performs diagnostic checks on your cluster.
 
-    e.  [memsqlctl](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html)
-        > Provides lower-level access to manage nodes on a host machine.
+    e.  [memsqlctl](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html)  Provides lower-level access to manage nodes on a host machine.
 
 # EKS Cluster
 
