@@ -4,7 +4,7 @@ tags:
  - AWS
 ---
 
-**Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)** 
+# Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)
 
 # Introduction
 
@@ -22,25 +22,24 @@ Reference:
 
 User prohibited to use below command or tools:
 
-1.  [Cluster management
-    > command](https://docs.singlestore.com/db/v7.6/en/reference/sql-reference/cluster-management-commands/cluster-management-commands.html)
+1.  [Cluster management command](https://docs.singlestore.com/db/v7.6/en/reference/sql-reference/cluster-management-commands/cluster-management-commands.html)
 
 2.  SingleStore DB Toolbox except sdb-report
 
-    a.  [sdb-toolbox-config](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html).
+    a.  [sdb-toolbox-config](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html)
         > Performs host machine registration.
 
-    b.  [sdb-deploy](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html).
+    b.  [sdb-deploy](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html)
         > Installs memsqlctl and the SingleStore DB database engine to
         > host machines in the cluster.
 
-    c.  [sdb-admin](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html).
+    c.  [sdb-admin](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html)
         > Helps you manage a SingleStore DB cluster.
 
-    d.  [sdb-report](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html).
+    d.  [sdb-report](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html)
         > Collects and performs diagnostic checks on your cluster.
 
-    e.  [memsqlctl](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html).
+    e.  [memsqlctl](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html)
         > Provides lower-level access to manage nodes on a host machine.
 
 # EKS Cluster
@@ -380,7 +379,7 @@ helm repo add cilium https://helm.cilium.io/
 This helm command sets eni=true and tunnel=disabled, meaning the Cilium
 will allocate a fully-routable AWS ENI IP address for each pod, similar
 to the behavior of the [Amazon VPC CNI
-plugin](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html).
+plugin](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html)
 
 Excluding the lines for eni=true, ipam.mode=eni and tunnel=disabled from
 the helm command will configure Cilium to use overlay routing mode.
@@ -486,19 +485,19 @@ height="0.4305555555555556in"}
 ## Deployment Prerequisites
 
 1.  Obtain a SingleStore license from the [SingleStore Customer
-    > Portal](https://portal.singlestore.com).
+    > Portal](https://portal.singlestore.com)
 
 2.  Select the SingleStore DB images to use. Two Docker images are
     > required for the deployment.
 
     a.  The node image is the SingleStore DB database engine and can be
         > found [on Docker
-        > Hub](https://hub.docker.com/r/memsql/node/tags).
+        > Hub](https://hub.docker.com/r/memsql/node/tags)
 
     b.  The Operator image is used to manage the SingleStore DB engine
         > deployment in Kubernetes environment, and can also be found
         > [on Docker
-        > Hub](https://hub.docker.com/r/memsql/operator/tags).
+        > Hub](https://hub.docker.com/r/memsql/operator/tags)
 
 3.  Use the StorageClass that you selected in *Cluster Admin
     > Prerequisites.*
@@ -1526,10 +1525,10 @@ The provided Grafana dashboards include:
 ## Prerequisites
 
 1.  A SingleStore DB 7.3 or later cluster to monitor (the Source
-    > cluster).
+    > cluster)
 
 2.  Optional: A separate SingleStore DB 7.3 or later cluster to collect
-    > monitoring data (the Metrics cluster).
+    > monitoring data (the Metrics cluster)
 
     a.  This can be the same as, or separate from, the Source cluster.
 
@@ -1721,7 +1720,7 @@ We will install grafana using helm chart
 cat \> grafana.yaml \<\<EOF
 
 \## Expose the grafana service to be accessed from outside the cluster
-(LoadBalancer service).
+(LoadBalancer service)
 
 \## or access it from within the cluster (ClusterIP service). Set the
 service type and the port to serve it.
@@ -1932,7 +1931,7 @@ Skip this step if you want to retain the AKS cluster for another
 application
 
 1.  Login to [Azure
-    > portal](https://portal.azure.com/#home).
+    > portal](https://portal.azure.com/#home)
 
 2.  In Home page search for Kubernetes service.
 
@@ -1963,7 +1962,7 @@ height="1.4861111111111112in"}
 
 ## SingleStore DB
 
-Skip this step if you did the previous step (delete AKS cluster).
+Skip this step if you did the previous step (delete AKS cluster)
 
 1.  Delete all Kubernetes object using helm command
 
