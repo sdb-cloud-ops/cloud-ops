@@ -163,73 +163,73 @@ Reference:
 
 {
 
-\"Version\": \"2012-10-17\",
+    \"Version\": \"2012-10-17\",
 
-\"Statement\": \[
+    \"Statement\": \[
 
-{
+        {
 
-\"Sid\": \"VisualEditor0\",
+            \"Sid\": \"VisualEditor0\",
 
-\"Effect\": \"Allow\",
+            \"Effect\": \"Allow\",
 
-\"Action\": \[
+            \"Action\": \[
 
-\"iam:ListRoles\",
+                \"iam:ListRoles\",
 
-\"ec2:DescribeSubnets\",
+                \"ec2:DescribeSubnets\",
 
-\"eks:CreateCluster\"
+                \"eks:CreateCluster\"
 
-\],
+            \],
 
-\"Resource\": \"\*\"
+            \"Resource\": \"\*\"
 
-},
+        },
 
-{
+        {
 
-\"Sid\": \"VisualEditor1\",
+            \"Sid\": \"VisualEditor1\",
 
-\"Effect\": \"Allow\",
+            \"Effect\": \"Allow\",
 
-\"Action\": \[
+            \"Action\": \[
 
-\"eks:DeleteCluster\",
+                \"eks:DeleteCluster\",
 
-\"iam:GetRole\",
+                \"iam:GetRole\",
 
-\"iam:PassRole\",
+                \"iam:PassRole\",
 
-\"iam:ListAttachedRolePolicies\",
+                \"iam:ListAttachedRolePolicies\",
 
-\"eks:DeleteNodegroup\",
+                \"eks:DeleteNodegroup\",
 
-\"eks:TagResource\",
+                \"eks:TagResource\",
 
-\"eks:DescribeCluster\",
+                \"eks:DescribeCluster\",
 
-\"eks:CreateNodegroup\"
+                \"eks:CreateNodegroup\"
 
-\],
+            \],
 
-\"Resource\": \[
+            \"Resource\": \[
 
-\"arn:aws:iam::\[account-id\]:role/AmazonEKSNodeRole\",
+                \"arn:aws:iam::\[account-id\]:role/AmazonEKSNodeRole\",
 
-\"arn:aws:iam::\[account-id\]:role/eksClusterRole\",
+                \"arn:aws:iam::\[account-id\]:role/eksClusterRole\",
 
-\"arn:aws:iam::\[account-id\]:role/\*AWSServiceRoleForAmazonEKSNodegroup\",
+                \"arn:aws:iam::\[account-id\]:role/\*AWSServiceRoleForAmazonEKSNodegroup\",
 
-\"arn:aws:eks:us-east-1:\[account-id\]:nodegroup/eks-cluster/\*/\*\",
+                \"arn:aws:eks:us-east-1:\[account-id\]:nodegroup/eks-cluster/\*/\*\",
 
-\"arn:aws:eks:us-east-1:\[account-id\]:cluster/eks-cluster\"
+                \"arn:aws:eks:us-east-1:\[account-id\]:cluster/eks-cluster\"
 
-\]
+            \]
 
-}
+        }
 
-\]
+    \]
 
 }
 
