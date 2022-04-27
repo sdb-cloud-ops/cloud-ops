@@ -69,7 +69,7 @@ Reference:
 
 6.  Click **Create role**
 
-![](./docs_deploy_aws_media/media/image57.png){width="6.267716535433071in"
+![](./assets/img/docs_deploy_aws_media/media/image57.png){width="6.267716535433071in"
 height="1.7222222222222223in"}
 
 7.  **Select trusted entity**
