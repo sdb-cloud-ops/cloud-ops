@@ -25,20 +25,17 @@
 
 <title>Deploy SingleStore with Amazon Web Service</title>
 <meta property="og:title" content="Deploy SingleStore with Amazon Web Service" />
-<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-" />
+<meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://localhost:4000" />
 <meta property="og:site_name" content="http://localhost:4000" />
 
 <meta itemprop="name" content="Deploy SingleStore with Amazon Web Service">
-<meta itemprop="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-">
+<meta itemprop="description" content="">
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Deploy SingleStore with Amazon Web Service"/>
-<meta name="twitter:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-"/>
+<meta name="twitter:description" content=""/>
 
 <link rel="stylesheet" href="/cloud-ops/assets/css/main.css">
 <link rel="stylesheet" href="/cloud-ops/assets/css/palette.css">
@@ -233,12 +230,90 @@ $(document).ready(function() {
         
       </ul>
     
+      <ul class="td-sidebar-nav__section pr-md-3">
+        
+        
+
+        <li class="td-sidebar-nav__section-title">
+          <a  href="" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">Docker Artifacts</a>
+        </li>
+        
+          <ul>
+            <li class="collapse show" id="docker-artifacts">
+              <ul class="td-sidebar-nav__section pr-md-3">
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/operator
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/node
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/tools
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/cluster-in-a-box
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+              </ul>
+            </li>
+          </ul>
+        
+      </ul>
+    
   </nav>
 </div>
 
           </div>
           <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
-              <div class="td-page-meta ml-2 pb-1 pt-2 mb-0 box0">
+              <div class="td-page-meta ml-2 pb-1 pt-2 mb-0 box0" hidden>
                   
 <!--
 <a href="https://github.com/vsoch/docsy-jekyll/edit/master/_docs/Deploying/AWS/deploying.md" target="_blank"><i class="fa fa-edit fa-fw"></i> Edit this page</a>
@@ -436,11 +511,2282 @@ $(document).ready(function() {
 
 
            <div class="td-content">
-	      <h1 id="deploy-singlestore-with-amazon-web-service">Deploy SingleStore with Amazon Web Service</h1>
+	      <h1 id="deploy-singlestore-db-in-amazon-elastic-kubernetes-service-eks">Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)</h1>
 
-<p>AWS deploying page - AWS/_docs/Deploying/AWS/deploying.md</p>
+<h1 id="introduction">Introduction</h1>
 
-<h2 id="content-to-be-filled">Content to be filled</h2>
+<p>Use these steps to deploy SingleStore DB in Amazon Elastic Kubernetes
+Service (EKS)</p>
+
+<h1 id="summary">Summary</h1>
+
+<p>SingleStore’s Cluster Management in kubernetes is different from native
+deployment. All jobs related to cluster management are done by
+operators.</p>
+
+<p>Reference:
+<a href="https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html">https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html</a></p>
+
+<p>User prohibited to use below command or tools:</p>
+
+<ol>
+  <li>
+    <p><a href="https://docs.singlestore.com/db/v7.6/en/reference/sql-reference/cluster-management-commands/cluster-management-commands.html">Cluster management command</a></p>
+  </li>
+  <li>
+    <p>SingleStore DB Toolbox except sdb-report</p>
+
+    <p>a.  <a href="https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html">sdb-toolbox-config</a>. Performs host machine registration.</p>
+
+    <p>b.  <a href="https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html">sdb-deploy</a>. Installs memsqlctl and the SingleStore DB database engine to host machines in the cluster.</p>
+
+    <p>c.  <a href="https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html">sdb-admin</a>. Helps you manage a SingleStore DB cluster.</p>
+
+    <p>d.  <a href="https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html">sdb-report</a>. Collects and performs diagnostic checks on your cluster.</p>
+
+    <p>e.  <a href="https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html">memsqlctl</a>. Provides lower-level access to manage nodes on a host machine.</p>
+  </li>
+</ol>
+
+<h1 id="eks-cluster">EKS Cluster</h1>
+
+<h2 id="prerequisite">Prerequisite</h2>
+
+<h3 id="role">Role</h3>
+
+<p>Create two roles</p>
+
+<h4 id="cluster-iam-role">Cluster IAM Role</h4>
+
+<p>Reference:
+<a href="https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html">https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html</a></p>
+
+<ol>
+  <li>
+    <p>Open the IAM console at <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a></p>
+  </li>
+  <li>
+    <p>In the left navigation pane, choose <strong>Roles</strong>.</p>
+  </li>
+  <li>
+    <p>Search the list of roles for <strong>eksClusterRole</strong>.
+ If a role that includes <strong>eksClusterRole</strong> doesn't exist, then continue the next step to create the role else skip the rest of steps.</p>
+  </li>
+  <li>
+    <p>Click <strong>Create role</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image57.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Select trusted entity</strong></p>
+  </li>
+  <li>
+    <p>Select <strong>AWS service</strong></p>
+  </li>
+  <li>
+    <p>Select <strong>EKS - Cluster</strong> as <strong>Use cases</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image60.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Add permissions</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image58.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Name, review, and create</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image59.png" alt="" /></p>
+  </li>
+</ol>
+
+<p>Reference:
+<a href="https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html">https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html</a></p>
+
+<p>Assign all *EKS* managed policy to the role</p>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image61.png" alt="" /></p>
+
+<h4 id="service-iam-role">Service IAM Role</h4>
+
+<ol>
+  <li>
+    <p>Open the IAM console at <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a></p>
+  </li>
+  <li>
+    <p>In the left navigation pane, choose <strong>Roles</strong>.</p>
+  </li>
+  <li>
+    <p>Search the list of roles for <strong>AWSServiceRoleForAmazonEKSNodegroup</strong>.
+ If a role that includes <strong>AWSServiceRoleForAmazonEKSNodegroup</strong> doesn't exist, then continue the next step to create the role else skip the rest of steps.</p>
+  </li>
+  <li>
+    <p>Click <strong>Create role</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image57.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Select trusted entity</strong></p>
+  </li>
+  <li>
+    <p>Select <strong>AWS service</strong></p>
+  </li>
+  <li>
+    <p>Select <strong>EKS - Nodegroup</strong> as <strong>Use cases</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image63.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Add permissions</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image62.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Name, review, and create</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image65.png" alt="" /></p>
+  </li>
+</ol>
+
+<h4 id="node-iam-role">Node IAM Role</h4>
+
+<p>Reference:
+<a href="https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html">https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html</a></p>
+
+<ol>
+  <li>
+    <p>Open the IAM console at <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a></p>
+  </li>
+  <li>
+    <p>In the left navigation pane, choose <strong>Roles</strong>.</p>
+  </li>
+  <li>
+    <p>Search the list of roles for <strong>AmazonEKSNodeRole</strong>.
+ If a role that includes <strong>AWSServiceRoleForAmazonEKS</strong> doesn't exist, then continue the next step to create the role else skip the rest of steps.</p>
+  </li>
+  <li>
+    <p>Click <strong>Create role</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image57.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Select trusted entity</strong></p>
+  </li>
+  <li>
+    <p>Select <strong>AWS service</strong></p>
+  </li>
+  <li>
+    <p>Select <strong>EC2</strong> as <strong>Use cases</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image67.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Add permissions</strong>, select <strong>AmazonEKSWorkerNodePolicy</strong> and <strong>AmazonEC2ContainerRegistryReadOnly</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image64.png" alt="" /></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image66.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Name, review, and create</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image68.png" alt="" /></p>
+  </li>
+</ol>
+
+<h3 id="policy">Policy</h3>
+
+<ol>
+  <li>
+    <p>Open the IAM console at <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a></p>
+  </li>
+  <li>
+    <p>In the left navigation pane, choose <strong>Policies</strong>.</p>
+  </li>
+  <li>
+    <p>Click <strong>Create Policy</strong>.</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image69.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Copy the following aws permission on <strong>JSON</strong> tab</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image72.png" alt="" /></p>
+  </li>
+</ol>
+
+<p>{</p>
+
+<p>"Version": "2012-10-17",</p>
+
+<p>"Statement": [</p>
+
+<p>{</p>
+
+<p>"Sid": "VisualEditor0",</p>
+
+<p>"Effect": "Allow",</p>
+
+<p>"Action": [</p>
+
+<p>"iam:ListRoles",</p>
+
+<p>"ec2:DescribeSubnets",</p>
+
+<p>"eks:CreateCluster"</p>
+
+<p>],</p>
+
+<p>"Resource": "*"</p>
+
+<p>},</p>
+
+<p>{</p>
+
+<p>"Sid": "VisualEditor1",</p>
+
+<p>"Effect": "Allow",</p>
+
+<p>"Action": [</p>
+
+<p>"eks:DeleteCluster",</p>
+
+<p>"iam:GetRole",</p>
+
+<p>"iam:PassRole",</p>
+
+<p>"iam:ListAttachedRolePolicies",</p>
+
+<p>"eks:DeleteNodegroup",</p>
+
+<p>"eks:TagResource",</p>
+
+<p>"eks:DescribeCluster",</p>
+
+<p>"eks:CreateNodegroup"</p>
+
+<p>],</p>
+
+<p>"Resource": [</p>
+
+<p>"arn:aws:iam::[account-id]:role/AmazonEKSNodeRole",</p>
+
+<p>"arn:aws:iam::[account-id]:role/eksClusterRole",</p>
+
+<p>"arn:aws:iam::[account-id]:role/*AWSServiceRoleForAmazonEKSNodegroup",</p>
+
+<p>"arn:aws:eks:us-east-1:[account-id]:nodegroup/eks-cluster/*/*",</p>
+
+<p>"arn:aws:eks:us-east-1:[account-id]:cluster/eks-cluster"</p>
+
+<p>]</p>
+
+<p>}</p>
+
+<p>]</p>
+
+<p>}</p>
+
+<ol>
+  <li>
+    <p><strong>Review policy</strong>, put name <strong>eks-policy</strong></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image70.png" alt="" /></p>
+  </li>
+</ol>
+
+<h3 id="user">User</h3>
+
+<p>Create user service</p>
+
+<ol>
+  <li>
+    <p>Open the IAM console at <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a></p>
+  </li>
+  <li>
+    <p>In the left navigation pane, choose <strong>Users</strong>.</p>
+  </li>
+  <li>
+    <p>Set user details</p>
+  </li>
+  <li>
+    <p>Select <strong>Access key - Programmatic access</strong> only</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image71.png" alt="" /></p>
+  </li>
+  <li>
+    <p><strong>Add permission</strong></p>
+  </li>
+  <li>
+    <p>Choose <strong>Attach existing policies directly</strong>.
+ Attach <strong>eks-policy</strong> to users.</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image73.png" alt="" /></p>
+  </li>
+</ol>
+
+<h2 id="create-the-cluster">Create the Cluster</h2>
+
+<p>Reference:
+<a href="https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli">https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli</a></p>
+
+<ol>
+  <li>Define</li>
+</ol>
+
+<p>region-code</p>
+
+<p>cluster-name</p>
+
+<p>account_id</p>
+
+<p>subnetId</p>
+
+<ol>
+  <li>Create cluster</li>
+</ol>
+
+<p>Use comma as delimiter if you have more than one subnet</p>
+
+<p>Create your cluster with the following command:</p>
+
+<p>aws eks create-cluster \</p>
+
+<p>--region region-code \</p>
+
+<p>--name cluster-name \</p>
+
+<p>--kubernetes-version 1.21 \</p>
+
+<p>--role-arn arn:aws:iam::[account-id]:role/eksClusterRole \</p>
+
+<p>--resources-vpc-config subnetIds=subnetId1,subnetId2</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image44.png)
+</code></pre></div></div>
+
+<p>This process may take several minutes.</p>
+
+<h2 id="access-the-cluster">Access the Cluster</h2>
+
+<p>Connect kubectl</p>
+
+<p>aws eks update-kubeconfig --region us-east-1 --name eks-cluster</p>
+
+<p>Verify</p>
+
+<p>kubectl get node -owide</p>
+
+<h2 id="width6267716535433071in-height04722222222222222in"><img src="../../assets/img/docs_deploy_aws_media/media/image46.png" alt="" />{width=”6.267716535433071in” height=”0.4722222222222222in”}</h2>
+
+<h2 id="delete-vpc-cni">Delete VPC CNI</h2>
+
+<p>Reference:
+<a href="https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/">https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/</a></p>
+
+<p>Cilium will manage ENIs instead of VPC CNI, so the aws-node DaemonSet
+has to be deleted to prevent conflict behavior.</p>
+
+<p>kubectl -n kube-system delete daemonset aws-node</p>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image47.png" alt="" /></p>
+
+<p>Wait the cluster creation complete if you above result</p>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image50.png" alt="" /></p>
+
+<p>You can continue to the next step using kubectl command</p>
+
+<h2 id="deploy-cilium-as-cni">Deploy Cilium as CNI</h2>
+
+<p>Reference:
+<a href="https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium">https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium</a></p>
+
+<p>Setup Helm repository:</p>
+
+<p>helm repo add cilium https://helm.cilium.io/</p>
+
+<p>This helm command sets eni=true and tunnel=disabled, meaning the Cilium
+will allocate a fully-routable AWS ENI IP address for each pod, similar
+to the behavior of the <a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html">Amazon VPC CNI
+plugin</a>.</p>
+
+<p>Excluding the lines for eni=true, ipam.mode=eni and tunnel=disabled from
+the helm command will configure Cilium to use overlay routing mode.
+Ensure the pod CIDR (ipam.operator.clusterPoolIPv4PodCIDR) is not
+overlapping with node CIDR.</p>
+
+<p>Deploy Cilium release via Helm:</p>
+
+<p>helm install cilium cilium/cilium --version 1.9.13 \</p>
+
+<p>--namespace kube-system \</p>
+
+<p>--set eni=true \</p>
+
+<p>--set ipam.mode=eni \</p>
+
+<p>--set egressMasqueradeInterfaces=eth0 \</p>
+
+<p>--set tunnel=disabled \</p>
+
+<p>--set nodeinit.enabled=true</p>
+
+<h2 id="create-the-node-group">Create the Node Group</h2>
+
+<p>Reference:
+<a href="https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli">https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli</a></p>
+
+<ol>
+  <li>Define</li>
+</ol>
+
+<p>region-code</p>
+
+<p>cluster-name</p>
+
+<p>account_id</p>
+
+<p>subnetId</p>
+
+<ol>
+  <li>Create node group</li>
+</ol>
+
+<p>Use space as delimiter if you have more than one subnet</p>
+
+<p>Create node group with the following command:</p>
+
+<p>aws eks create-nodegroup \</p>
+
+<p>--cluster-name cluster-name \</p>
+
+<p>--region region-code \</p>
+
+<p>--nodegroup-name ng-1 \</p>
+
+<p>--scaling-config minSize=1,maxSize=2,desiredSize=1 \</p>
+
+<p>--instance-types t2.large \</p>
+
+<p>--subnets subnetId1 subnetId2 \</p>
+
+<p>--node-role arn:aws:iam::[accountId]:role/AmazonEKSNodeRole</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image48.png)
+</code></pre></div></div>
+
+<p>This process may take several minutes.</p>
+
+<h2 id="verification">Verification</h2>
+
+<ol>
+  <li>Ensure the node’s status is Ready and all pod’s status Running.</li>
+</ol>
+
+<p>kubectl get nodes</p>
+
+<p>kubectl get po -A</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image49.png)
+</code></pre></div></div>
+
+<ol>
+  <li>In cilium operator logs show Initialization complete</li>
+</ol>
+
+<p>kubectl logs [cilium-operator-pod-name] -nkube-system --tail 10</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image51.png)
+</code></pre></div></div>
+
+<h1 id="singlestore">SingleStore</h1>
+
+<h2 id="cluster-admin-prerequisites">Cluster Admin Prerequisites</h2>
+
+<ol>
+  <li>
+    <p>Determine the project (namespace) in which to deploy SingleStore DB.</p>
+  </li>
+  <li>Determine which StorageClass (SC) to use.
+ Avoid using a StorageClass with an NFS-based provisioner. Ideally, you should choose a StorageClass that uses a block storage-based provisioner that supports volume expansion and the WaitForFirstConsumer binding mode.
+    <blockquote>
+      <p>Available SC in EKS:</p>
+    </blockquote>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image52.png" alt="" /></p>
+  </li>
+  <li>Determine the fsGroup to use for the deployment.</li>
+</ol>
+
+<h2 id="deployment-prerequisites">Deployment Prerequisites</h2>
+
+<ol>
+  <li>
+    <p>Obtain a SingleStore license from the <a href="https://portal.singlestore.com">SingleStore Customer Portal</a>.</p>
+  </li>
+  <li>
+    <p>Select the SingleStore DB images to use. Two Docker images are required for the deployment.</p>
+
+    <p>a.  The node image is the SingleStore DB database engine and can be found <a href="https://hub.docker.com/r/memsql/node/tags">on Docker Hub</a>.</p>
+
+    <p>b.  The Operator image is used to manage the SingleStore DB engine deployment in Kubernetes environment, and can also be found <a href="https://hub.docker.com/r/memsql/operator/tags">on Docker Hub</a>.</p>
+  </li>
+  <li>
+    <p>Use the StorageClass that you selected in <em>Cluster Admin Prerequisites.</em></p>
+  </li>
+  <li>
+    <p>Substitute the fsGroup value with the value you copied in <em>Cluster Admin Prerequisites.</em></p>
+  </li>
+</ol>
+
+<h2 id="create-the-object-definition-files">Create the Object Definition Files</h2>
+
+<p>The following are definition files that will be used by the Operator to
+create your cluster. Create new definition files and copy and paste the
+contents of each code block into those files.</p>
+
+<ul>
+  <li>
+    <p><a href="https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/deployment-yaml.html">deployment.yaml</a></p>
+  </li>
+  <li>
+    <p><a href="https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/rbac-yaml.html">rbac.yaml</a></p>
+  </li>
+  <li>
+    <p><a href="https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-crd-yaml.html">memsql-cluster-crd.yaml</a></p>
+  </li>
+  <li>
+    <p><a href="https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-yaml.html">memsql-cluster.yaml</a></p>
+  </li>
+</ul>
+
+<p>###</p>
+
+<h3 id="memsql-operator">MemSQL Operator</h3>
+
+<p>For --cluster-id, enter the name of your cluster. This will be the name
+used in the memsql-cluster.yaml file as per:</p>
+
+<p>metadata:</p>
+
+<p>name: memsql-cluster</p>
+
+<p>Create a deployment definition file using the template below.</p>
+
+<p>cat &gt; deployment.yaml &lt;&lt;EOF</p>
+
+<p>apiVersion: apps/v1</p>
+
+<p>kind: Deployment</p>
+
+<p>metadata:</p>
+
+<p>name: memsql-operator</p>
+
+<p>spec:</p>
+
+<p>replicas: 1</p>
+
+<p>selector:</p>
+
+<p>matchLabels:</p>
+
+<p>name: memsql-operator</p>
+
+<p>template:</p>
+
+<p>metadata:</p>
+
+<p>labels:</p>
+
+<p>name: memsql-operator</p>
+
+<p>spec:</p>
+
+<p>serviceAccountName: memsql-operator</p>
+
+<p>containers:</p>
+
+<p>- name: memsql-operator</p>
+
+<p>image: memsql/operator:1.2.5-83e8133a</p>
+
+<p>imagePullPolicy: Always</p>
+
+<p>args:</p>
+
+<p>- "--cores-per-unit"</p>
+
+<p>- "8"</p>
+
+<p>- "--memory-per-unit"</p>
+
+<p>- "32"</p>
+
+<p>- "--merge-service-annotations"</p>
+
+<p>- "--cluster-id"</p>
+
+<p>- "memsql-cluster"</p>
+
+<p>- "--fs-group-id"</p>
+
+<p>- "5555"</p>
+
+<p>env:</p>
+
+<p>- name: WATCH_NAMESPACE</p>
+
+<p>valueFrom:</p>
+
+<p>fieldRef:</p>
+
+<p>fieldPath: metadata.namespace</p>
+
+<p>- name: POD_NAME</p>
+
+<p>valueFrom:</p>
+
+<p>fieldRef:</p>
+
+<p>fieldPath: metadata.name</p>
+
+<p>- name: OPERATOR_NAME</p>
+
+<p>value: memsql-operator</p>
+
+<p>- name: RELATED_IMAGE_BACKUP</p>
+
+<p>value: memsql/tools</p>
+
+<p>EOF</p>
+
+<h3 id="rbac">RBAC</h3>
+
+<p>Copy the following to create a ServiceAccount definition file that will
+be used by the MemSQL Operator.</p>
+
+<p>cat &gt; rbac.yaml &lt;&lt;EOF</p>
+
+<p>apiVersion: v1</p>
+
+<p>kind: ServiceAccount</p>
+
+<p>metadata:</p>
+
+<p>name: memsql-operator</p>
+
+<p>---</p>
+
+<p>apiVersion: rbac.authorization.k8s.io/v1</p>
+
+<p>kind: Role</p>
+
+<p>metadata:</p>
+
+<p>name: memsql-operator</p>
+
+<p>rules:</p>
+
+<p>- apiGroups:</p>
+
+<p>- ""</p>
+
+<p>resources:</p>
+
+<p>- pods</p>
+
+<p>- services</p>
+
+<p>- endpoints</p>
+
+<p>- persistentvolumeclaims</p>
+
+<p>- events</p>
+
+<p>- configmaps</p>
+
+<p>- secrets</p>
+
+<p>verbs:</p>
+
+<p>- '*'</p>
+
+<p>- apiGroups:</p>
+
+<p>- policy</p>
+
+<p>resources:</p>
+
+<p>- poddisruptionbudgets</p>
+
+<p>verbs:</p>
+
+<p>- '*'</p>
+
+<p>- apiGroups:</p>
+
+<p>- batch</p>
+
+<p>resources:</p>
+
+<p>- cronjobs</p>
+
+<p>verbs:</p>
+
+<p>- '*'</p>
+
+<p>- apiGroups:</p>
+
+<p>- ""</p>
+
+<p>resources:</p>
+
+<p>- namespaces</p>
+
+<p>verbs:</p>
+
+<p>- get</p>
+
+<p>- apiGroups:</p>
+
+<p>- apps</p>
+
+<p>- extensions</p>
+
+<p>resources:</p>
+
+<p>- deployments</p>
+
+<p>- daemonsets</p>
+
+<p>- replicasets</p>
+
+<p>- statefulsets</p>
+
+<p>- statefulsets/status</p>
+
+<p>verbs:</p>
+
+<p>- '*'</p>
+
+<p>- apiGroups:</p>
+
+<p>- memsql.com</p>
+
+<p>resources:</p>
+
+<p>- '*'</p>
+
+<p>verbs:</p>
+
+<p>- '*'</p>
+
+<p>- apiGroups:</p>
+
+<p>- networking.k8s.io</p>
+
+<p>resources:</p>
+
+<p>- networkpolicies</p>
+
+<p>verbs:</p>
+
+<p>- '*'</p>
+
+<p>- apiGroups:</p>
+
+<p>- coordination.k8s.io</p>
+
+<p>resources:</p>
+
+<p>- leases</p>
+
+<p>verbs:</p>
+
+<p>- get</p>
+
+<p>- list</p>
+
+<p>- watch</p>
+
+<p>- create</p>
+
+<p>- update</p>
+
+<p>- patch</p>
+
+<p>- delete</p>
+
+<p>---</p>
+
+<p>kind: RoleBinding</p>
+
+<p>apiVersion: rbac.authorization.k8s.io/v1</p>
+
+<p>metadata:</p>
+
+<p>name: memsql-operator</p>
+
+<p>subjects:</p>
+
+<p>- kind: ServiceAccount</p>
+
+<p>name: memsql-operator</p>
+
+<p>roleRef:</p>
+
+<p>kind: Role</p>
+
+<p>name: memsql-operator</p>
+
+<p>apiGroup: rbac.authorization.k8s.io</p>
+
+<p>EOF</p>
+
+<h3 id="custom-resource-definition">Custom Resource Definition</h3>
+
+<ol>
+  <li>
+    <p>Update apiVersion from v1alpha to v1</p>
+  </li>
+  <li>
+    <p>Restructure the spec</p>
+  </li>
+  <li>
+    <p>Create the CRD file use following command</p>
+  </li>
+</ol>
+
+<p>cat &gt; memsql-cluster-crd.yaml &lt;&lt;EOF</p>
+
+<p>apiVersion: apiextensions.k8s.io/v1</p>
+
+<p>kind: CustomResourceDefinition</p>
+
+<p>metadata:</p>
+
+<p>name: memsqlclusters.memsql.com</p>
+
+<p>spec:</p>
+
+<p>group: memsql.com</p>
+
+<p>names:</p>
+
+<p>kind: MemsqlCluster</p>
+
+<p>listKind: MemsqlClusterList</p>
+
+<p>plural: memsqlclusters</p>
+
+<p>singular: memsqlcluster</p>
+
+<p>shortNames:</p>
+
+<p>- memsql</p>
+
+<p>scope: Namespaced</p>
+
+<p>versions:</p>
+
+<p>- name: v1alpha1</p>
+
+<p>served: true</p>
+
+<p>storage: true</p>
+
+<p>schema:</p>
+
+<p>openAPIV3Schema:</p>
+
+<p>type: object</p>
+
+<p>x-kubernetes-preserve-unknown-fields: true</p>
+
+<p>additionalPrinterColumns:</p>
+
+<p>- name: Aggregators</p>
+
+<p>type: integer</p>
+
+<p>description: Number of SingleStore DB Aggregators</p>
+
+<p>jsonPath: .spec.aggregatorSpec.count</p>
+
+<p>- name: Leaves</p>
+
+<p>type: integer</p>
+
+<p>description: Number of SingleStore DB Leaves (per availability group)</p>
+
+<p>jsonPath: .spec.leafSpec.count</p>
+
+<p>- name: Redundancy Level</p>
+
+<p>type: integer</p>
+
+<p>description: Redundancy level of SingleStore DB Cluster</p>
+
+<p>jsonPath: .spec.redundancyLevel</p>
+
+<p>- name: Age</p>
+
+<p>type: date</p>
+
+<p>jsonPath: .metadata.creationTimestamp</p>
+
+<p>EOF</p>
+
+<h3 id="memsql-cluster">MemSQL Cluster</h3>
+
+<p>Create a MemSQLCluster definition file to specify the configuration
+settings for your cluster.</p>
+
+<p>cat &gt; memsql-cluster.yaml &lt;&lt;EOF</p>
+
+<p>apiVersion: memsql.com/v1alpha1</p>
+
+<p>kind: MemsqlCluster</p>
+
+<p>metadata:</p>
+
+<p>name: memsql-cluster</p>
+
+<p>spec:</p>
+
+<p># TODO: paste your license key from https://portal.singlestore.com
+here:</p>
+
+<p>license: REPLACE_THIS_WITH_LICENSE</p>
+
+<p># TODO: replace the default admin password for production environment</p>
+
+<p># select password("secret");</p>
+
+<p>adminHashedPassword: "*14E65567ABDB5135D0CFD9A70B3032C179A49EE7"</p>
+
+<p>nodeImage:</p>
+
+<p>repository: memsql/node</p>
+
+<p>tag: latest</p>
+
+<p># TODO: set greater than 1 to enable HA mode</p>
+
+<p>redundancyLevel: 1</p>
+
+<p>serviceSpec:</p>
+
+<p>objectMetaOverrides:</p>
+
+<p>labels:</p>
+
+<p>custom: label</p>
+
+<p>annotations:</p>
+
+<p>custom: annotations</p>
+
+<p>aggregatorSpec:</p>
+
+<p>count: 1</p>
+
+<p>height: 0.25</p>
+
+<p>storageGB: 20</p>
+
+<p>storageClass: default</p>
+
+<p>objectMetaOverrides:</p>
+
+<p>annotations:</p>
+
+<p>optional: annotation</p>
+
+<p>labels:</p>
+
+<p>optional: label</p>
+
+<p>leafSpec:</p>
+
+<p>count: 1</p>
+
+<p>height: 0.25</p>
+
+<p>storageGB: 20</p>
+
+<p>storageClass: default</p>
+
+<p>objectMetaOverrides:</p>
+
+<p>annotations:</p>
+
+<p>optional: annotation</p>
+
+<p>labels:</p>
+
+<p>optional: label</p>
+
+<p>EOF</p>
+
+<h2 id="deploy-a-singlestore-db-cluster">Deploy a SingleStore DB Cluster</h2>
+
+<p>Reference: <a href="https://docs.singlestore.com/db/v7.3/en/deploy/kubernetes/deploy-a-singlestore-db-cluster.html">Deploy a SingleStore DB
+Cluster</a></p>
+
+<p>Now that your various object definition files are created, you will use
+kubectl to do the actual object creation and cluster deployment.</p>
+
+<ol>
+  <li>Install the RBAC resources.</li>
+</ol>
+
+<p>kubectl create -f rbac.yaml -n&lt;namespace&gt;</p>
+
+<ol>
+  <li>Install the MemSQL cluster resource definition.</li>
+</ol>
+
+<p>kubectl create -f memsql-cluster-crd.yaml</p>
+
+<ol>
+  <li>Deploy the Operator.</li>
+</ol>
+
+<p>kubectl create -f deployment.yaml -n&lt;namespace&gt;</p>
+
+<ol>
+  <li>Verify the deployment was successful by checking the status of the pods in your Kube cluster. You should see the Operator with a status of Running.</li>
+</ol>
+
+<p>kubectl get pods</p>
+
+<ol>
+  <li>Finally, create the cluster.</li>
+</ol>
+
+<p>kubectl create -f memsql-cluster.yaml</p>
+
+<ol>
+  <li>After a couple minutes, run kubectl get pods again to verify the aggregator and leaf nodes all started and have a status of Running.</li>
+</ol>
+
+<p>kubectl get pods<br />
+If you see no pods are in the Running state, check the Operator logs by
+running</p>
+
+<p>kubectl logs deployment memsql-operator -n&lt;namespace&gt;</p>
+
+<p>then look at the various objects to see what is failing.</p>
+
+<h2 id="verification-1">Verification</h2>
+
+<ol>
+  <li>Verify the cluster</li>
+</ol>
+
+<p>kubectl get memsqlcluster memsql-cluster \</p>
+
+<p>-o=jsonpath='{.status.phase}{"\n"}' -n&lt;name-space&gt;</p>
+
+<p>The SingleStore DB server deployment is complete when Running is
+displayed after running the above commands.</p>
+
+<ol>
+  <li>Verify the pod list, run the following command to display the pod list.</li>
+</ol>
+
+<p>kubectl get po -n&lt;name-space&gt;</p>
+
+<p>Result may vary:</p>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image55.png" alt="A picture containing text Description automatically
+generated" /></p>
+
+<ol>
+  <li>After the deployment completes, run the following command to display the two SingleStore DB service endpoints that are created during the deployment.</li>
+</ol>
+
+<p>kubectl get svc | grep &lt;cluster-name&gt;</p>
+
+<p>The svc-&lt;cluster-name&gt;-ddl and svc-&lt;cluster-name&gt;-dml service
+endpoints can be used to connect to SingleStore DB using a MySQL
+compatible client. Note that svc-&lt;cluster-name&gt;-dml only exists if
+memsqlCluster.aggregatorSpec.count is greater than 1.</p>
+
+<p>The output will resemble the following (actual values will vary):</p>
+
+<p>NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE</p>
+
+<p>svc-memsql-cluster ClusterIP None &lt;none&gt; 3306/TCP 44h</p>
+
+<p>svc-memsql-cluster-ddl LoadBalancer 10.101.189.86 169.46.26.10
+3306:30351/TCP 44h</p>
+
+<p>svc-memsql-cluster-dml LoadBalancer 10.103.29.220 169.46.26.11
+3306:32524/TCP 44h</p>
+
+<p>svc-memsql-studio LoadBalancer 10.97.104.121 169.46.26.11 8081:31161/TCP
+43h</p>
+
+<p>Column definition:</p>
+
+<p>NAME EXTERNAL-IP PORT(S) AGE</p>
+
+<p>Service name External IP Service Port:Node Port Service created</p>
+
+<p>Refer to <a href="https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-definition-language-ddl/data-definition-language-ddl.html">Data Definition Language
+DDL</a>
+and <a href="https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-manipulation-language-dml/data-manipulation-language-dml.html">Data Manipulation Language
+DML</a>
+for more information.</p>
+
+<p>#</p>
+
+<h2 id="install-singlestore-client">Install SingleStore Client</h2>
+
+<ol>
+  <li>Add the SingleStore repository to your repository list.</li>
+</ol>
+
+<p>sudo yum-config-manager --add-repo
+https://release.memsql.com/production/rpm/x86_64/repodata/memsql.repo</p>
+
+<ol>
+  <li>Verify that the SingleStore repo information is listed under repolist.</li>
+</ol>
+
+<p>sudo yum repolist</p>
+
+<ol>
+  <li>Verify that the which package is installed. This is used during the install process to identify the correct package type for your installation.</li>
+</ol>
+
+<p>rpm -q which</p>
+
+<ol>
+  <li>Install which
+    <blockquote>
+      <p>Skip this step if you have it</p>
+    </blockquote>
+  </li>
+</ol>
+
+<p>sudo yum install -y which</p>
+
+<ol>
+  <li>Install the SingleStore client.</li>
+</ol>
+
+<p>sudo yum install -y singlestore-client</p>
+
+<h2 id="access-singlestore-db">Access SingleStore DB</h2>
+
+<ol>
+  <li>Connect via Load Balancer / External IP (refer svc-memsql-cluster-ddl endpoint)</li>
+</ol>
+
+<p>singlestore -u admin -h &lt;external-ip&gt; -p</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image56.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Connect via Node Port (refer svc-memsql-cluster-ddl endpoint)
+ In case the External-IP is pending, we can access through Node Port Get the host IP of singlestore’s master node:</li>
+</ol>
+
+<p>kubectl get po node-memsql-cluster-master-0 -n&lt;namespace&gt;
+-o=jsonpath='{.status.hostIP}{"\n"}'</p>
+
+<blockquote>
+  <p>Sample output: 172.31.21.171</p>
+</blockquote>
+
+<p>singlestore -u admin -h &lt;host-ip&gt; -P &lt;node-port&gt; -p</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image17.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Check status of aggregator and leaf, run the following command</li>
+</ol>
+
+<p>show aggregators;</p>
+
+<p>show leaves;</p>
+
+<blockquote>
+  <p>The result may vary:</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image11.png)
+</code></pre></div></div>
+
+<h1 id="scaling">Scaling</h1>
+
+<p>We need to modify the resource only. All jobs are done by operators. You
+need to monitor the log of the pod operator during scaling to identify
+if the scaling is in progress, done or has a problem.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ol>
+  <li>
+    <p>Ensure the backup operator is running and the backup file exists.</p>
+  </li>
+  <li>
+    <p>Get the memsql cluster</p>
+  </li>
+</ol>
+
+<p>kubectl get memsqlcluster -n&lt;namespace&gt;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image20.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Check current spec of MemSQL cluster</li>
+</ol>
+
+<p>kubectl get memsqlcluster memsql-cluster -n&lt;namespace&gt; -oyaml</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image12.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Definition</li>
+</ol>
+
+<p>count: number of nodes</p>
+
+<p>height: cpu &amp; memory limit</p>
+
+<p>storageGB: storage size</p>
+
+<ol>
+  <li>Monitor log of operator</li>
+</ol>
+
+<p>Open a new terminal window.</p>
+
+<p>kubectl get po -n&lt;namespace&gt;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image13.png)
+</code></pre></div></div>
+
+<p>kubectl logs memsql-operator-&lt;x&gt; -n&lt;namespace&gt; -f</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image18.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Monitor the pod during scaling</li>
+</ol>
+
+<p>Open a new terminal window</p>
+
+<p>watch kubectl get po -n&lt;namespace&gt;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image14.png)
+</code></pre></div></div>
+
+<h2 id="horizontal-scaling">Horizontal Scaling</h2>
+
+<p>Increasing the number of cluster nodes. Adding an aggregator or leaf
+nodes.</p>
+
+<ol>
+  <li>Create scaling patch file:</li>
+</ol>
+
+<p>cat &gt; scaling.yaml &lt;&lt;EOF</p>
+
+<p>spec:</p>
+
+<p>aggregatorSpec:</p>
+
+<p>count: 1</p>
+
+<p>leafSpec:</p>
+
+<p>count: 2</p>
+
+<p>EOF</p>
+
+<ol>
+  <li>Apply your changes on memsql cluster by patching the object using patching file</li>
+</ol>
+
+<p>kubectl patch memsqlcluster memsql-cluster --type merge --patch-file
+scaling.yaml -n&lt;namespace&gt;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image15.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Verification</li>
+</ol>
+
+<p>New leaves pod created</p>
+
+<p>kubectl get po -n&lt;namespace&gt;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image16.png)
+</code></pre></div></div>
+
+<h2 id="vertical-scaling">Vertical Scaling</h2>
+
+<p>Increasing node’s resources, such as cpu, memory or storage.</p>
+
+<h3 id="cpu--memory">CPU &amp; Memory</h3>
+
+<p>Requirement:</p>
+
+<p>The number of cpu &amp; memory defined in args of operator should be greater
+than zero</p>
+
+<p>kubectl get deployment memsql-operator -n&lt;namespace&gt; -oyaml</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image21.png)
+</code></pre></div></div>
+
+<p><strong>Note</strong>: You can do vertical scaling in the current cluster if and only
+if the number of cores-per-unit or memory-per-unit is greater than zero
+else you need to recreate a new cluster then reattach the storage.</p>
+
+<p>We have two ways to do vertical scaling</p>
+
+<h4 id="operator">Operator</h4>
+
+<p>Modify the operator configuration</p>
+
+<ol>
+  <li>Edit the memsql-operator deployment</li>
+</ol>
+
+<p>kubectl edit deploy memsql-operator -n&lt;namespace&gt;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image3.png)
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Change the number of cores-per-unit or memory-per-unit. Ensure the number greater than zero.</p>
+  </li>
+  <li>
+    <p>Save the changes</p>
+  </li>
+</ol>
+
+<p>Result:</p>
+
+<ol>
+  <li>
+    <p>Old pod operator will destroy</p>
+  </li>
+  <li>
+    <p>New pod operator will created</p>
+  </li>
+  <li>
+    <p>Monitor log of new operator</p>
+  </li>
+</ol>
+
+<p>kubectl logs memsql-operator-&lt;x&gt; -n&lt;namespace&gt; -f</p>
+
+<ol>
+  <li>Let’s</li>
+</ol>
+
+<h4 id="cluster">Cluster</h4>
+
+<p>Modify the node’s spec</p>
+
+<ol>
+  <li>Create scaling patch file</li>
+</ol>
+
+<p>cat &gt; scaling.yaml &lt;&lt;EOF</p>
+
+<p>spec:</p>
+
+<p>aggregatorSpec:</p>
+
+<p>height: 0.125</p>
+
+<p>leafSpec:</p>
+
+<p>height: 0.25</p>
+
+<p>EOF</p>
+
+<ol>
+  <li>Get the pods</li>
+</ol>
+
+<p>kubectl get po -n&lt;namespace&gt;|grep node</p>
+
+<p>sample output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image1.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Check the resource before changes</li>
+</ol>
+
+<p>kubectl get pods &lt;pod-name&gt; -n&lt;namespace&gt; -o jsonpath=\</p>
+
+<p>'{range .spec.containers[?(@.name=="node")]}{"Container Name:
+"}{.name}{"\n"}{"Requests:"}{.resources.requests}{"\n"}{"Limits:"}{.resources.limits}{"\n"}{end}'</p>
+
+<p>sample output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image2.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Apply your changes on memsql cluster by patching the object using patching file</li>
+</ol>
+
+<p>kubectl patch memsqlcluster memsql-cluster --type merge --patch-file
+scaling.yaml -n&lt;namespace&gt;</p>
+
+<ol>
+  <li>Verification</li>
+</ol>
+
+<p>Verify the number of cpu &amp; memory is increase as per desired</p>
+
+<p>kubectl get pod &lt;pod-name&gt; -n&lt;namespace&gt; -o jsonpath=\</p>
+
+<p>'{range .spec.containers[?(@.name=="node")]}{"Container Name:
+"}{.name}{"\n"}{"Requests:"}{.resources.requests}{"\n"}{"Limits:"}{.resources.limits}{"\n"}{end}'</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image4.png)
+</code></pre></div></div>
+
+<h3 id="storage">Storage</h3>
+
+<ol>
+  <li>Requirement</li>
+</ol>
+
+<pre><code class="language-{=html}">&lt;!-- --&gt;
+</code></pre>
+<p>a.  The storage class should be allow volume expansion</p>
+
+<p>kubectl get sc &lt;sc-name&gt; -oyaml</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image7.png)
+</code></pre></div></div>
+
+<p>b.  Support modifying a Disk Size to a larger size only</p>
+
+<pre><code class="language-{=html}">&lt;!-- --&gt;
+</code></pre>
+<ol>
+  <li>Check storage</li>
+</ol>
+
+<p>Check the capacity of pvc/pv.</p>
+
+<p>kubectl get pvc -n&lt;namespace&gt;</p>
+
+<p>kubectl get pv</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image5.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Create scaling patch file</li>
+</ol>
+
+<p>cat &gt; scaling.yaml &lt;&lt;EOF</p>
+
+<p>spec:</p>
+
+<p>aggregatorSpec:</p>
+
+<p>storageGB: 20</p>
+
+<p>leafSpec:</p>
+
+<p>storageGB: 25</p>
+
+<p>EOF</p>
+
+<ol>
+  <li>Apply your changes on memsql cluster by patching the object using patching file</li>
+</ol>
+
+<p>kubectl patch memsqlcluster memsql-cluster --type merge --patch-file
+scaling.yaml -n&lt;namespace&gt;</p>
+
+<ol>
+  <li>Verify</li>
+</ol>
+
+<p>Check the capacity of pvc/pv.</p>
+
+<p>kubectl get pvc -n&lt;namespace&gt;</p>
+
+<p>kubectl get pv</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image6.png)
+</code></pre></div></div>
+
+<h3 id="troubleshoot">Troubleshoot</h3>
+
+<ol>
+  <li>Error during resize the storage</li>
+</ol>
+
+<p>kubectl describe pvc &lt;pvc-name&gt; -n&lt;namespace&gt;</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image8.png)
+</code></pre></div></div>
+
+<p>Error message in pod operator:</p>
+
+<p>errors.go:92 {controller.memsql} Reconciler error will retry after:
+"55s" error: "Waiting for PVC
+pv-storage-node-memsql-cluster-leaf-ag1-0 to finish controller
+resizing"</p>
+
+<p>Root cause:</p>
+
+<p>The storage provisioner required detach the pod before resizing the
+volume</p>
+
+<p>Solution:</p>
+
+<ol>
+  <li>Delete the pod</li>
+</ol>
+
+<p>kubectl delete po &lt;pod-name&gt; -n&lt;namespace&gt;</p>
+
+<ol>
+  <li>Downsizing the replicas on related statefulset if option 1 doesn’t effect:</li>
+</ol>
+
+<p>kubectl -n&lt;namespace&gt; patch sts &lt;statefulset-name&gt; --type merge -p
+'{"spec":{"replicas": 0}}'</p>
+
+<p>Result:</p>
+
+<ol>
+  <li>
+    <p>The pod will be deleted</p>
+  </li>
+  <li>
+    <p>PVC will be resized</p>
+  </li>
+  <li>
+    <p>The new pod will recreate</p>
+  </li>
+</ol>
+
+<h1 id="monitoring">Monitoring</h1>
+
+<p>Reference:
+<a href="https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html">https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html</a></p>
+
+<h2 id="introduction-1">Introduction</h2>
+
+<p>SingleStore’s native monitoring solution is designed to capture and
+reveal SingleStore DB cluster events over time. By analyzing this event
+data, you can identify trends and, if necessary, take action to
+remediate issues. Use these steps to Configure SingleStore DB Monitoring
+in Kubernetes Environment.</p>
+
+<h2 id="terminology">Terminology</h2>
+
+<p>Throughout this guide, the cluster that is being monitored will be
+referred to as the “Source” cluster, and the cluster that stores the
+monitoring data will be referred to as the “Metrics” cluster. The
+databases that store monitoring data will be referred to as the metrics
+database.</p>
+
+<h2 id="high-level-architecture">High-Level Architecture</h2>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image10.png" alt="" /></p>
+
+<p>In SingleStore’s native monitoring solution, the Metrics cluster
+utilizes a SingleStore pipeline to pull the data from the exporter
+process on the Source cluster and stores it in a database named metrics.
+Note that this metrics database can either reside within the same
+cluster as the Source cluster, or within a dedicated cluster.</p>
+
+<p>When these event data is then analyzed through the associated Grafana
+dashboards, trends can be identified and, if necessary, actions taken to
+remediate issues.</p>
+
+<p>The provided Grafana dashboards include:</p>
+
+<hr />
+<p><strong>Dashboard</strong>       <strong>Description</strong>
+  ——————- —————————————————
+  Active session      Aggregated resource consumption by activity and
+  history             activity type</p>
+
+<p>Activity history    Resource consumption by a specific activity over
+                      time</p>
+
+<p>Detailed cluster    A “birds-eye view” of a single SingleStore DB
+  view                cluster</p>
+
+<p>Information schema  Provides a view into information_schema views
+  view                PROCESSLIST, TABLES, and TABLE_STATISTICS</p>
+
+<p>Memory usage        Granular breakdown of memory use for a host</p>
+
+<p>SingleStore DB      Collected status variables from each host in the
+  status and          cluster
+  variables view</p>
+
+<p>Node breakout       System metrics from each host in the cluster</p>
+
+<p>Node drilldown      System metrics from each host in the cluster, with
+                      the ability to focus on a specific metric subsystem
+  ———————————————————————–</p>
+
+<h2 id="prerequisites-1">Prerequisites</h2>
+
+<ol>
+  <li>
+    <p>A SingleStore DB 7.3 or later cluster to monitor (the Source cluster).</p>
+  </li>
+  <li>
+    <p>Optional: A separate SingleStore DB 7.3 or later cluster to collect monitoring data (the Metrics cluster).</p>
+
+    <p>a.  This can be the same as, or separate from, the Source cluster.</p>
+
+    <p>b.  If you opt to use a separate cluster, we recommend a cluster with two aggregator nodes and two leaf nodes, each with 2TB disks and with high availability (HA) enabled.</p>
+  </li>
+  <li>
+    <p>A Grafana 6.0.0 or later instance that can access the Metrics cluster.</p>
+  </li>
+</ol>
+
+<p>##</p>
+
+<h2 id="port-configuration">Port Configuration</h2>
+
+<hr />
+<p><strong>Default Port</strong>  <strong>Used by</strong>              <strong>Invoked by</strong>
+  —————– ———————— —————————-
+  3000              Grafana                  User browser</p>
+
+<p>3306              SingleStore DB           memsql_exporter</p>
+
+<p>8080              SingleStore DB Studio    User browser</p>
+
+<p>9104              memsql_exporter          SingleStore pipelines
+  ———————————————————————–</p>
+
+<h2 id="identify-exporter-process">Identify Exporter Process</h2>
+
+<ol>
+  <li>Check the exporter’s port</li>
+</ol>
+
+<blockquote>
+  <p>kubectl exec -it &lt;master-pod&gt; -n&lt;namespace&gt; -- curl -v telnet://node-memsql-cluster-master-0:9104</p>
+</blockquote>
+
+<p>Sample output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image9.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Test the metrics</li>
+</ol>
+
+<p>curl http://node-memsql-cluster-master-0:9104</p>
+
+<p>Sample output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image36.png)
+</code></pre></div></div>
+
+<h2 id="configure-the-metrics-database">Configure the metrics Database</h2>
+
+<h3 id="create-the-metrics-database-and-associated-tables">Create the metrics database and associated tables</h3>
+
+<p>Download the sql file below, extract and run in metric DB.</p>
+
+<p><a href="https://archived.docs.singlestore.com/files/cluster-monitoring-guide/metrics-database-ddl_73.sql.zip">metrics-database-ddl_73.sql</a></p>
+
+<h3 id="create-monitoring-user">Create monitoring user</h3>
+
+<ol>
+  <li>Access the metric cluster using mysql client as admin</li>
+</ol>
+
+<p>mysql -u admin -h &lt;hostname or ip&gt; -P &lt;port&gt; -p
+ Enter the admin password respectively.</p>
+
+<p>Sample output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image30.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Create the monitoring user</li>
+</ol>
+
+<p>CREATE USER 'dbmon'@'%' IDENTIFIED BY &lt;password&gt;';</p>
+
+<ol>
+  <li>Grant SELECT privilege to monitoring user
+ GRANT SELECT, EXECUTE ON metrics.* TO 'dbmon'@'%';</li>
+</ol>
+
+<h3 id="create-the-pipeline">Create the pipeline</h3>
+
+<p><strong>Note</strong>: You must edit exporter-host and port in the following SQL
+statements to align with where your exporter process resides.</p>
+
+<ol>
+  <li>
+    <p>The exporter-host is typically the host of your Source cluster’s Master Aggregator that’s running the exporter and must include http://.</p>
+  </li>
+  <li>
+    <p>The default port for the endpoint is 9104.</p>
+  </li>
+</ol>
+
+<h3 id="the-metrics-pipeline">The metrics pipeline</h3>
+
+<ol>
+  <li>
+    <p>Get the master host
+ show aggregators;</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image33.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Create the pipeline</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>CREATE OR REPLACE PIPELINE `metrics` AS</p>
+
+  <p>LOAD DATA prometheus_exporter</p>
+
+  <p>"&lt;exporter-host:port&gt;/cluster-metrics"</p>
+
+  <p>CONFIG '{"is_memsql_internal":true}'</p>
+
+  <p>INTO PROCEDURE `load_metrics` FORMAT JSON;</p>
+
+  <p>Sample output:</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image34.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Test and verify the pipeline</li>
+</ol>
+
+<blockquote>
+  <p>TEST PIPELINE metrics;</p>
+
+  <p>You should see some data after running that command.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image35.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Run the pipeline</li>
+</ol>
+
+<blockquote>
+  <p>START PIPELINE IF NOT RUNNING metrics;</p>
+</blockquote>
+
+<h3 id="the-blobs-pipeline">The blobs pipeline</h3>
+
+<ol>
+  <li>Create the pipeline</li>
+</ol>
+
+<blockquote>
+  <p>CREATE OR REPLACE PIPELINE `blobs` AS</p>
+
+  <p>LOAD DATA prometheus_exporter</p>
+
+  <p>"&lt;exporter-host:port&gt;/samples"</p>
+
+  <p>CONFIG '{"is_memsql_internal":true, "download_type":"samples",
+"monitoring_version": "7.3"}'</p>
+
+  <p>INTO PROCEDURE `load_blobs` FORMAT JSON;</p>
+
+  <p>Sample output:</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image37.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Test and verify the pipeline</li>
+</ol>
+
+<blockquote>
+  <p>TEST PIPELINE blobs;</p>
+</blockquote>
+
+<ol>
+  <li>Run the pipeline</li>
+</ol>
+
+<blockquote>
+  <p>START PIPELINE IF NOT RUNNING blobs;</p>
+</blockquote>
+
+<h3 id="troubleshoot-the-pipeline">Troubleshoot the pipeline</h3>
+
+<p>If you see some error like below screenshot, please double check the
+exporter-host</p>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image41.png" alt="" /></p>
+
+<p>Drop the existing pipeline and recreate the pipeline</p>
+
+<p>DROP PIPELINE metrics;</p>
+
+<p>Sample output:</p>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image54.png" alt="" /></p>
+
+<h2 id="grafana">Grafana</h2>
+
+<h3 id="setup">Setup</h3>
+
+<p>We will install grafana using helm chart</p>
+
+<ol>
+  <li>Add grafana repo</li>
+</ol>
+
+<blockquote>
+  <p>helm repo add grafana https://grafana.github.io/helm-charts</p>
+</blockquote>
+
+<ol>
+  <li>Create config file</li>
+</ol>
+
+<blockquote>
+  <p>You need to modify pvc section:</p>
+
+  <p>storageClassName &gt; your default storage class name available in your k8s environment</p>
+
+  <p>existingClaim &gt; you need it if you have more than one pvc for grafana</p>
+</blockquote>
+
+<p>cat &gt; grafana.yaml &lt;&lt;EOF</p>
+
+<p>## Expose the grafana service to be accessed from outside the cluster
+(LoadBalancer service).</p>
+
+<p>## or access it from within the cluster (ClusterIP service). Set the
+service type and the port to serve it.</p>
+
+<p>## ref: http://kubernetes.io/docs/user-guide/services/</p>
+
+<p>##</p>
+
+<p>service:</p>
+
+<p>enabled: true</p>
+
+<p>type: LoadBalancer</p>
+
+<p>port: 80</p>
+
+<p>targetPort: 3000</p>
+
+<p>portName: service</p>
+
+<p>selector:</p>
+
+<p>app.kubernetes.io/name: grafana</p>
+
+<p>app.kubernetes.io/instance: grafana</p>
+
+<p>## Enable persistence using Persistent Volume Claims</p>
+
+<p>## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/</p>
+
+<p>##</p>
+
+<p>persistence:</p>
+
+<p>type: pvc</p>
+
+<p>enabled: enable</p>
+
+<p>storageClassName: default</p>
+
+<p>accessModes:</p>
+
+<p>- ReadWriteOnce</p>
+
+<p>size: 5Gi</p>
+
+<p>finalizers:</p>
+
+<p>- kubernetes.io/pvc-protection</p>
+
+<p># selectorLabels: {}</p>
+
+<p># subPath: ""</p>
+
+<p># existingClaim: grafana</p>
+
+<p>EOF</p>
+
+<ol>
+  <li>Install Grafana in Kubernetes environment using helm
+ helm install grafana grafana/grafana -nmemsql -f grafana.yaml</li>
+</ol>
+
+<h3 id="install-the-plugin">Install the Plugin</h3>
+
+<ol>
+  <li>
+    <p>Get grafana pod name
+ kubectl get po -nmemsql</p>
+  </li>
+  <li>
+    <p>Install the plugin</p>
+
+    <p>a.  Piechart Panel</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>kubectl exec -it &lt;pod-name&gt; -n&lt;namespace&gt; -- grafana-cli plugins
+install grafana-piechart-panel</p>
+</blockquote>
+
+<p>b.  Multibar Graph Panel</p>
+
+<blockquote>
+  <p>kubectl exec -it &lt;pod-name&gt; -n&lt;namespace&gt; -- grafana-cli
+--pluginUrl
+https://github.com/CorpGlory/grafana-multibar-graph-panel/archive/0.2.5.zip
+plugins install multibar-graph-panel</p>
+
+  <p>Sample output:</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image39.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Delete grafana pod to restart the service</li>
+</ol>
+
+<blockquote>
+  <p>kubectl delete &lt;pod-name&gt; -n&lt;namespace&gt;</p>
+</blockquote>
+
+<h3 id="access">Access</h3>
+
+<p>Add the grafana monitoring datasource</p>
+
+<ol>
+  <li>Get the external IP &amp; port</li>
+</ol>
+
+<blockquote>
+  <p>kubectl get svc grafana -n&lt;namespace&gt;</p>
+
+  <p>Sample output:</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image43.png)
+</code></pre></div></div>
+
+<ol>
+  <li>Access the url</li>
+</ol>
+
+<blockquote>
+  <p>http://&lt;external-ip&gt;:&lt;nodeport&gt;</p>
+
+  <p>Sample: http://13.127.222.56:30153/</p>
+</blockquote>
+
+<ol>
+  <li>Get the admin’s password</li>
+</ol>
+
+<blockquote>
+  <p>kubectl get secret -n&lt;namespace&gt; grafana -o
+jsonpath="{.data.admin-password}" | base64 --decode ; echo</p>
+
+  <p>Sample output:</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image32.png)
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Login
+ Log in using admin as the username and the password.</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image26.png" alt="" /></p>
+  </li>
+</ol>
+
+<h3 id="datasource">Datasource</h3>
+
+<ol>
+  <li>
+    <p>Add a monitoring MySQL data source with the following settings.</p>
+
+    <p>a.  Click the gear icon in the side menu, and then click <strong>Datasource</strong>. Then Click <strong>Add data source button</strong>.</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image25.png" alt="" />{width=”4.941772747156605in” height=”3.6718755468066493in”}</p>
+  </li>
+</ol>
+
+<p>b.  Type <em>mysql</em> on filter box, then click <strong>Select</strong> button.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image23.png)
+</code></pre></div></div>
+
+<p>c.  FIll out the form.</p>
+
+<blockquote>
+  <p>Data source name: <em>monitoring</em></p>
+
+  <p>Data source type: <em>mysql</em></p>
+
+  <p>Data source host: &lt;metrics-cluster-master-aggregator-host&gt;</p>
+
+  <p>Data source port: <em>3306</em></p>
+
+  <p>Database name: <em>metrics</em></p>
+
+  <p>User: <em>dbmon</em></p>
+
+  <p>Password: &lt;secure-password-or-blank-if-none&gt;</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image28.png)
+</code></pre></div></div>
+
+<p>d.  Click <strong>Save &amp; test</strong> button.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image27.png)
+</code></pre></div></div>
+
+<p>###</p>
+
+<h3 id="dashboard">Dashboard</h3>
+
+<ol>
+  <li>
+    <p>Download the cluster monitoring dashboards from SingleStore and extract the downloaded file <a href="https://archived.docs.singlestore.com/files/cluster-monitoring-guide/cluster-monitoring-dashboards-73.zip">cluster-monitoring-dashboards-73.zip</a></p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image24.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Import the dashboards into Grafana.</p>
+  </li>
+</ol>
+
+<pre><code class="language-{=html}">&lt;!-- --&gt;
+</code></pre>
+<p>a.  Click the + icon in the side menu, and then click <strong>Import</strong>.</p>
+
+<p>b.  From here you can upload a dashboard JSON file.</p>
+
+<p>c.  Click <strong>Upload JSON file button</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![](../../assets/img/docs_deploy_aws_media/media/image29.png)
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Click <strong>Import</strong> button</p>
+
+    <p><img src="../../assets/img/docs_deploy_aws_media/media/image38.png" alt="" /></p>
+  </li>
+  <li>
+    <p>View the Dashboards
+ When all cluster monitoring components are installed, configured, and running, the Grafana dashboards can be used to monitor SingleStore DB cluster health over time.
+ <img src="../../assets/img/docs_deploy_aws_media/media/image31.png" alt="" />{width=”5.830295275590551in” height=”3.682292213473316in”}</p>
+  </li>
+</ol>
+
+<h1 id="rollbackcleanup">Rollback/Cleanup</h1>
+
+<h2 id="aks-cluster">AKS Cluster</h2>
+
+<p>Skip this step if you want to retain the AKS cluster for another
+application</p>
+
+<ol>
+  <li>
+    <p>Login to <a href="https://portal.azure.com/#home">Azure portal</a>.</p>
+  </li>
+  <li>
+    <p>In Home page search for Kubernetes service.</p>
+  </li>
+</ol>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image19.jpg" alt="AKS_Service" /></p>
+
+<ol>
+  <li>Click on the Kubernetes Service and choose the Kubernetes Cluster you want to delete.</li>
+</ol>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image22.jpg" alt="AKS_Choose_kubernetes_Cluster" /></p>
+
+<ol>
+  <li>Click on the <strong>Delete</strong> option on the right side top as shown in figure.</li>
+</ol>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image40.jpg" alt="AKS_Kubernetes_Cluster-Delete" /></p>
+
+<ol>
+  <li>Confirm the <strong>delete</strong> operation by pressing "Yes" button.</li>
+</ol>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image42.jpg" alt="AKS_Kubernetes_Cluster-Delete_confirm" /></p>
+
+<ol>
+  <li>Check the <strong>Delete</strong> operation status.</li>
+</ol>
+
+<p><img src="../../assets/img/docs_deploy_aws_media/media/image45.jpg" alt="AKS_Kubernetes_Cluster-Delete_status" /></p>
+
+<h2 id="singlestore-db">SingleStore DB</h2>
+
+<p>Skip this step if you did the previous step (delete AKS cluster).</p>
+
+<ol>
+  <li>Delete all Kubernetes object using helm command</li>
+</ol>
+
+<blockquote>
+  <p>helm delete singlestore -n&lt;namespaces&gt;</p>
+</blockquote>
+
+<ol>
+  <li>Clean up the PersistentVolumeClaim</li>
+</ol>
+
+<blockquote>
+  <p>Run the below command:</p>
+
+  <p>kubectl delete pvc --all -n&lt;namespaces&gt;</p>
+</blockquote>
+
+<ol>
+  <li>Clean up the CustomResourceDefinition</li>
+</ol>
+
+<blockquote>
+  <p>Run the below command:</p>
+
+  <p>kubectl delete crd MemsqlCluster</p>
+</blockquote>
+
+<ol>
+  <li>Clean up the Namespaces</li>
+</ol>
+
+<blockquote>
+  <p>Run the below command:</p>
+
+  <p>kubectl delete ns &lt;namespaces&gt;</p>
+</blockquote>
+
+<h1 id="useful-command">Useful Command</h1>
+
+<h2 id="kubernetes">Kubernetes</h2>
+
+<p>Kubernetes object</p>
+
+<p>statefulsets, deployment, pod, memsqlcluster, pvc, pv</p>
+
+<p>kubectl command:</p>
+
+<p>Go to inside pod:</p>
+
+<p>kubectl exec -it [pod name] -n &lt;namespace&gt; -- bash</p>
+
+<p>Other:</p>
+
+<p>kubectl get statefulsets</p>
+
+<p>kubectl get deploy -n memsql</p>
+
+<p>kubectl describe deploy [deployment name] -n memsql</p>
+
+<p>kubectl get pod -n memsql</p>
+
+<p>kubectl describe pod [pod name] -n memsql</p>
+
+<p>kubectl get memsqlcluster -n memsql</p>
+
+<p>kubectl describe memsqlcluster [memsqlcluster name] -n memsql</p>
+
+<p>kubectl get pvc -n memsql</p>
+
+<p>kubectl describe pvc [pvc name] -n memsql</p>
+
+<p>kubectl get pv -n memsql</p>
+
+<p>kubectl describe pv [pv name] -n memsql</p>
+
+<p>kubectl logs [pod name] -n memsql</p>
+
+<p>kubectl logs -f [pod name] -n&lt;namespace&gt;</p>
+
+<h2 id="singlestore-1">SingleStore</h2>
+
+<p>singlestore command need to run inside the master pod:</p>
+
+<p>Check license:</p>
+
+<p>memsqlctl show-license</p>
+
+<p>List MemSQL Nodes on the local machine:</p>
+
+<p>memsqlctl list-nodes</p>
+
+<p>List aggregator node:</p>
+
+<p>memsqlctl show-aggregators</p>
+
+<p>List leaves node:</p>
+
+<p>memsqlctl show-leaves</p>
+
+<h1 id="deployment-artifacts">Deployment Artifacts</h1>
+<p>Deployment related files can be found at <a href="https://github.com/sdb-cloud-ops/AWS">https://github.com/sdb-cloud-ops/AWS</a></p>
+<ul>
+  <li>k8s operator yamls</li>
+  <li>terraform scripts</li>
+</ul>
 
 <script
   src="/cloud-ops/assets/js/jquery-3.3.1/jquery-3.3.1.min.js"
@@ -496,7 +2842,7 @@ $('h1').first().append('<div><span style="font-size:12px" class="badge badge-pri
 
 
               
-              <style>
+              <!--<style>
   .feedback--answer {
     display: inline-block;
   }
@@ -553,7 +2899,7 @@ $('h1').first().append('<div><span style="font-size:12px" class="badge badge-pri
     sendFeedback(0);
   });
 </script><br/>
-
+-->
            </div>
           </main>
         </div>
@@ -604,3 +2950,4 @@ $('h1').first().append('<div><span style="font-size:12px" class="badge badge-pri
 
   </body>
 </html>
+

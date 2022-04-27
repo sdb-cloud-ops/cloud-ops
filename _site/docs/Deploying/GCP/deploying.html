@@ -25,20 +25,17 @@
 
 <title>Deploy SingleStore with Google Cloud Kubernetes Engine</title>
 <meta property="og:title" content="Deploy SingleStore with Google Cloud Kubernetes Engine" />
-<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-" />
+<meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://localhost:4000" />
 <meta property="og:site_name" content="http://localhost:4000" />
 
 <meta itemprop="name" content="Deploy SingleStore with Google Cloud Kubernetes Engine">
-<meta itemprop="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-">
+<meta itemprop="description" content="">
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Deploy SingleStore with Google Cloud Kubernetes Engine"/>
-<meta name="twitter:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-"/>
+<meta name="twitter:description" content=""/>
 
 <link rel="stylesheet" href="/cloud-ops/assets/css/main.css">
 <link rel="stylesheet" href="/cloud-ops/assets/css/palette.css">
@@ -233,12 +230,90 @@ $(document).ready(function() {
         
       </ul>
     
+      <ul class="td-sidebar-nav__section pr-md-3">
+        
+        
+
+        <li class="td-sidebar-nav__section-title">
+          <a  href="" class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">Docker Artifacts</a>
+        </li>
+        
+          <ul>
+            <li class="collapse show" id="docker-artifacts">
+              <ul class="td-sidebar-nav__section pr-md-3">
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/operator
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/node
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/tools
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+                  <li class="td-sidebar-nav__section-title">
+                    <a href="
+                                
+                             "
+                       class="align-left pl-0 pr-2 td-sidebar-link td-sidebar-link__section">memsql/cluster-in-a-box
+                    </a>
+                  </li>
+
+                  
+                  
+
+                  
+
+                  
+                
+              </ul>
+            </li>
+          </ul>
+        
+      </ul>
+    
   </nav>
 </div>
 
           </div>
           <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
-              <div class="td-page-meta ml-2 pb-1 pt-2 mb-0 box0">
+              <div class="td-page-meta ml-2 pb-1 pt-2 mb-0 box0" hidden>
                   
 <!--
 <a href="https://github.com/vsoch/docsy-jekyll/edit/master/_docs/Deploying/GCP/deploying.md" target="_blank"><i class="fa fa-edit fa-fw"></i> Edit this page</a>
@@ -581,6 +656,13 @@ svc-memsql-cluster-ddl   LoadBalancer   &lt;ip-address&gt;     &lt;ip-address&gt
 </code></pre></div></div>
 <p>This concludes setting up SingleStore with Google Cloud Kubernetes Engine.</p>
 
+<h2 id="deployment-artifacts">Deployment Artifacts</h2>
+<p>Deployment related files can be found at <a href="https://github.com/sdb-cloud-ops/GCP">https://github.com/sdb-cloud-ops/GCP</a></p>
+<ul>
+  <li>k8s operator yamls</li>
+  <li>terraform scripts</li>
+</ul>
+
 <script
   src="/cloud-ops/assets/js/jquery-3.3.1/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -635,7 +717,7 @@ $('h1').first().append('<div><span style="font-size:12px" class="badge badge-pri
 
 
               
-              <style>
+              <!--<style>
   .feedback--answer {
     display: inline-block;
   }
@@ -692,7 +774,7 @@ $('h1').first().append('<div><span style="font-size:12px" class="badge badge-pri
     sendFeedback(0);
   });
 </script><br/>
-
+-->
            </div>
           </main>
         </div>
@@ -743,3 +825,4 @@ $('h1').first().append('<div><span style="font-size:12px" class="badge badge-pri
 
   </body>
 </html>
+
