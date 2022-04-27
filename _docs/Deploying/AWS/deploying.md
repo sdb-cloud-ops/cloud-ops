@@ -6,6 +6,7 @@ tags:
 
 # Deploy SingleStore DB in Amazon Elastic Kubernetes Service (EKS)
 
+
 # Introduction
 
 Use these steps to deploy SingleStore DB in Amazon Elastic Kubernetes
@@ -18,24 +19,30 @@ deployment. All jobs related to cluster management are done by
 operators.
 
 Reference:
-[https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html](https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html)
+[[https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html]{.underline}](https://docs.singlestore.com/db/v7.3/en/reference/memsql-operator-reference/memsql-operator-reference-overview.html)
 
 User prohibited to use below command or tools:
 
-1.  [Cluster management command](https://docs.singlestore.com/db/v7.6/en/reference/sql-reference/cluster-management-commands/cluster-management-commands.html)
+1.  [[Cluster management
+    > command]{.underline}](https://docs.singlestore.com/db/v7.6/en/reference/sql-reference/cluster-management-commands/cluster-management-commands.html)
 
 2.  SingleStore DB Toolbox except sdb-report
 
-    a.  [sdb-toolbox-config](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html)  Performs host machine registration.
+    a.  [[sdb-toolbox-config]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-toolbox-config.html).
+        > Performs host machine registration.
 
-    b.  [sdb-deploy](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html)  Installs memsqlctl and the SingleStore DB database engine to host machines in the cluster.
+    b.  [[sdb-deploy]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-deploy.html).
+        > Installs memsqlctl and the SingleStore DB database engine to
+        > host machines in the cluster.
 
-    c.  [sdb-admin](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html)  Helps you manage a SingleStore DB cluster.
+    c.  [[sdb-admin]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-admin.html).
+        > Helps you manage a SingleStore DB cluster.
 
-    d.  [sdb-report](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html)  Collects and performs diagnostic checks on your cluster.
+    d.  [[sdb-report]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/sdb-report.html).
+        > Collects and performs diagnostic checks on your cluster.
 
-    e.  [memsqlctl](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html)  Provides lower-level access to manage nodes on a host machine.
-
+    e.  [[memsqlctl]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-management-with-tools/singlestore-db-toolbox/memsqlctl.html).
+        > Provides lower-level access to manage nodes on a host machine.
 
 # EKS Cluster
 
@@ -48,18 +55,21 @@ Create two roles
 #### Cluster IAM Role
 
 Reference:
-[https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html)
+[[https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html)
 
-3.  Open the IAM console at [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/)
+3.  Open the IAM console at
+    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
 
 4.  In the left navigation pane, choose **Roles**.
 
 5.  Search the list of roles for **eksClusterRole**.
-    If a role that includes **eksClusterRole** doesn\'t exist, then continue the next step to create the role else skip the rest of steps.
+
+> If a role that includes **eksClusterRole** doesn\'t exist, then
+> continue the next step to create the role else skip the rest of steps.
 
 6.  Click **Create role**
 
-![](media/image57.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image57.png){width="6.267716535433071in"
 height="1.7222222222222223in"}
 
 7.  **Select trusted entity**
@@ -68,39 +78,44 @@ height="1.7222222222222223in"}
 
 9.  Select **EKS - Cluster** as **Use cases**
 
-![](media/image60.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image60.png){width="6.267716535433071in"
 height="3.1805555555555554in"}
 
 10. **Add permissions**
 
-![](media/image58.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image58.png){width="6.267716535433071in"
 height="1.9444444444444444in"}
 
 11. **Name, review, and create**
 
-![](media/image59.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image59.png){width="6.267716535433071in"
 height="2.5972222222222223in"}
 
 Reference:
-[https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html](https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html)
+[[https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/security-iam-awsmanpol.html)
 
 Assign all \*EKS\* managed policy to the role
 
-![](media/image61.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image61.png){width="6.267716535433071in"
 height="2.6944444444444446in"}
 
 #### Service IAM Role
 
-1.  Open the IAM console at [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/)
+1.  Open the IAM console at
+    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Roles**.
 
-3.  Search the list of roles for **AWSServiceRoleForAmazonEKSNodegroup**.
-    If a role that includes **AWSServiceRoleForAmazonEKSNodegroup** doesn\'t exist, then continue the next step to create the role else skip the rest of steps.
+3.  Search the list of roles for
+    > **AWSServiceRoleForAmazonEKSNodegroup**.
+
+> If a role that includes **AWSServiceRoleForAmazonEKSNodegroup**
+> doesn\'t exist, then continue the next step to create the role else
+> skip the rest of steps.
 
 4.  Click **Create role**
 
-![](media/image57.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image57.png){width="6.267716535433071in"
 height="1.7222222222222223in"}
 
 5.  **Select trusted entity**
@@ -109,35 +124,38 @@ height="1.7222222222222223in"}
 
 7.  Select **EKS - Nodegroup** as **Use cases**
 
-![](media/image63.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image63.png){width="6.267716535433071in"
 height="3.388888888888889in"}
 
 8.  **Add permissions**
 
-![](media/image62.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image62.png){width="6.267716535433071in"
 height="2.138888888888889in"}
 
 9.  **Name, review, and create**
 
-![](media/image65.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image65.png){width="6.267716535433071in"
 height="2.8055555555555554in"}
 
 #### Node IAM Role
 
 Reference:
-[https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html)
+[[https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html)
 
-1.  Open the IAM console at [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/)
+1.  Open the IAM console at
+    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Roles**.
 
 3.  Search the list of roles for **AmazonEKSNodeRole**.
 
-> If a role that includes **AWSServiceRoleForAmazonEKS** doesn\'t exist, then continue the next step to create the role else skip the rest of steps.
+> If a role that includes **AWSServiceRoleForAmazonEKS** doesn\'t exist,
+> then continue the next step to create the role else skip the rest of
+> steps.
 
 4.  Click **Create role**
 
-![](media/image57.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image57.png){width="6.267716535433071in"
 height="1.7222222222222223in"}
 
 5.  **Select trusted entity**
@@ -146,36 +164,38 @@ height="1.7222222222222223in"}
 
 7.  Select **EC2** as **Use cases**
 
-![](media/image67.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image67.png){width="6.267716535433071in"
 height="3.2083333333333335in"}
 
-8.  **Add permissions**, select **AmazonEKSWorkerNodePolicy** and **AmazonEC2ContainerRegistryReadOnly**
+8.  **Add permissions**, select **AmazonEKSWorkerNodePolicy** and
+    > **AmazonEC2ContainerRegistryReadOnly**
 
-![](media/image64.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image64.png){width="6.267716535433071in"
 height="1.7777777777777777in"}
 
-![](media/image66.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image66.png){width="6.267716535433071in"
 height="0.19444444444444445in"}
 
 9.  **Name, review, and create**
 
-![](media/image68.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image68.png){width="6.267716535433071in"
 height="2.5416666666666665in"}
 
 ### Policy
 
-1.  Open the IAM console at [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/)
+1.  Open the IAM console at
+    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Policies**.
 
 3.  Click **Create Policy**.
 
-![](media/image69.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image69.png){width="6.267716535433071in"
 height="1.6527777777777777in"}
 
 4.  Copy the following aws permission on **JSON** tab
 
-![](media/image72.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image72.png){width="6.267716535433071in"
 height="2.513888888888889in"}
 
 {
@@ -252,13 +272,15 @@ height="2.513888888888889in"}
 
 5.  **Review policy**, put name **eks-policy**
 
-![](media/image70.png){width="6.267716535433071in" height="1.625in"}
+![](./docs_deploy_aws_media/media/image70.png){width="6.267716535433071in"
+height="1.625in"}
 
 ### User
 
 Create user service
 
-1.  Open the IAM console at [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/)
+1.  Open the IAM console at
+    > [[https://console.aws.amazon.com/iam/]{.underline}](https://console.aws.amazon.com/iam/)
 
 2.  In the left navigation pane, choose **Users**.
 
@@ -266,7 +288,7 @@ Create user service
 
 4.  Select **Access key - Programmatic access** only
 
-![](media/image71.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image71.png){width="6.267716535433071in"
 height="3.6666666666666665in"}
 
 5.  **Add permission**
@@ -275,13 +297,13 @@ height="3.6666666666666665in"}
 
 > Attach **eks-policy** to users.
 
-![](media/image73.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image73.png){width="6.267716535433071in"
 height="1.9166666666666667in"}
 
 ## Create the Cluster
 
 Reference:
-[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
+[[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
 
 1.  Define
 
@@ -311,7 +333,7 @@ aws eks create-cluster \\
 
 \--resources-vpc-config subnetIds=subnetId1,subnetId2
 
-![](media/image44.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image44.png){width="6.267716535433071in"
 height="3.888888888888889in"}
 
 This process may take several minutes.
@@ -326,24 +348,24 @@ Verify
 
 kubectl get node -owide
 
-## ![](media/image46.png){width="6.267716535433071in" height="0.4722222222222222in"}
+## ![](./docs_deploy_aws_media/media/image46.png){width="6.267716535433071in" height="0.4722222222222222in"}
 
 ## Delete VPC CNI
 
 Reference:
-[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/)
+[[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/]{.underline}](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/)
 
 Cilium will manage ENIs instead of VPC CNI, so the aws-node DaemonSet
 has to be deleted to prevent conflict behavior.
 
 kubectl -n kube-system delete daemonset aws-node
 
-![](media/image47.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image47.png){width="6.267716535433071in"
 height="0.5138888888888888in"}
 
 Wait the cluster creation complete if you above result
 
-![](media/image50.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image50.png){width="6.267716535433071in"
 height="0.2916666666666667in"}
 
 You can continue to the next step using kubectl command
@@ -351,7 +373,7 @@ You can continue to the next step using kubectl command
 ## Deploy Cilium as CNI
 
 Reference:
-[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium)
+[[https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium]{.underline}](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-eks/#deploy-cilium)
 
 Setup Helm repository:
 
@@ -359,8 +381,8 @@ helm repo add cilium https://helm.cilium.io/
 
 This helm command sets eni=true and tunnel=disabled, meaning the Cilium
 will allocate a fully-routable AWS ENI IP address for each pod, similar
-to the behavior of the [Amazon VPC CNI
-plugin](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html)
+to the behavior of the [[Amazon VPC CNI
+plugin]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html).
 
 Excluding the lines for eni=true, ipam.mode=eni and tunnel=disabled from
 the helm command will configure Cilium to use overlay routing mode.
@@ -386,7 +408,7 @@ helm install cilium cilium/cilium \--version 1.9.13 \\
 ## Create the Node Group
 
 Reference:
-[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
+[[https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli]{.underline}](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
 
 1.  Define
 
@@ -420,7 +442,7 @@ aws eks create-nodegroup \\
 
 \--node-role arn:aws:iam::\[accountId\]:role/AmazonEKSNodeRole
 
-![](media/image48.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image48.png){width="6.267716535433071in"
 height="4.847222222222222in"}
 
 This process may take several minutes.
@@ -433,14 +455,14 @@ kubectl get nodes
 
 kubectl get po -A
 
-![](media/image49.png){width="5.671875546806649in"
+![](./docs_deploy_aws_media/media/image49.png){width="5.671875546806649in"
 height="1.7335958005249343in"}
 
 2.  In cilium operator logs show Initialization complete
 
 kubectl logs \[cilium-operator-pod-name\] -nkube-system \--tail 10
 
-![](media/image51.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image51.png){width="6.267716535433071in"
 height="1.2638888888888888in"}
 
 # SingleStore
@@ -450,28 +472,41 @@ height="1.2638888888888888in"}
 1.  Determine the project (namespace) in which to deploy SingleStore DB.
 
 2.  Determine which StorageClass (SC) to use.
-    Avoid using a StorageClass with an NFS-based provisioner. Ideally, you should choose a StorageClass that uses a block storage-based provisioner that supports volume expansion and the WaitForFirstConsumer binding mode.
+
+> Avoid using a StorageClass with an NFS-based provisioner. Ideally, you
+> should choose a StorageClass that uses a block storage-based
+> provisioner that supports volume expansion and the
+> WaitForFirstConsumer binding mode.
 >
 > Available SC in EKS:
 
-![](media/image52.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image52.png){width="6.267716535433071in"
 height="0.4305555555555556in"}
 
 3.  Determine the fsGroup to use for the deployment.
 
 ## Deployment Prerequisites
 
-1.  Obtain a SingleStore license from the [SingleStore Customer Portal](https://portal.singlestore.com)
+1.  Obtain a SingleStore license from the [[SingleStore Customer
+    > Portal]{.underline}](https://portal.singlestore.com).
 
-2.  Select the SingleStore DB images to use. Two Docker images are required for the deployment.
+2.  Select the SingleStore DB images to use. Two Docker images are
+    > required for the deployment.
 
-    a.  The node image is the SingleStore DB database engine and can be found [on Docker Hub](https://hub.docker.com/r/memsql/node/tags)
+    a.  The node image is the SingleStore DB database engine and can be
+        > found [[on Docker
+        > Hub]{.underline}](https://hub.docker.com/r/memsql/node/tags).
 
-    b.  The Operator image is used to manage the SingleStore DB engine deployment in Kubernetes environment, and can also be found [on Docker Hub](https://hub.docker.com/r/memsql/operator/tags)
+    b.  The Operator image is used to manage the SingleStore DB engine
+        > deployment in Kubernetes environment, and can also be found
+        > [[on Docker
+        > Hub]{.underline}](https://hub.docker.com/r/memsql/operator/tags).
 
-3.  Use the StorageClass that you selected in *Cluster Admin Prerequisites.*
+3.  Use the StorageClass that you selected in *Cluster Admin
+    > Prerequisites.*
 
-4.  Substitute the fsGroup value with the value you copied in *Cluster Admin Prerequisites.*
+4.  Substitute the fsGroup value with the value you copied in *Cluster
+    > Admin Prerequisites.*
 
 ## Create the Object Definition Files
 
@@ -479,13 +514,13 @@ The following are definition files that will be used by the Operator to
 create your cluster. Create new definition files and copy and paste the
 contents of each code block into those files.
 
--   [deployment.yaml](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/deployment-yaml.html)
+-   [[deployment.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/deployment-yaml.html)
 
--   [rbac.yaml](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/rbac-yaml.html)
+-   [[rbac.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/rbac-yaml.html)
 
--   [memsql-cluster-crd.yaml](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-crd-yaml.html)
+-   [[memsql-cluster-crd.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-crd-yaml.html)
 
--   [memsql-cluster.yaml](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-yaml.html)
+-   [[memsql-cluster.yaml]{.underline}](https://docs.singlestore.com/db/v7.6/en/deploy/kubernetes/create-the-object-definition-files/memsql-cluster-yaml.html)
 
 ###  
 
@@ -953,8 +988,8 @@ EOF
 
 ## Deploy a SingleStore DB Cluster
 
-Reference: [Deploy a SingleStore DB
-Cluster](https://docs.singlestore.com/db/v7.3/en/deploy/kubernetes/deploy-a-singlestore-db-cluster.html)
+Reference: [[Deploy a SingleStore DB
+Cluster]{.underline}](https://docs.singlestore.com/db/v7.3/en/deploy/kubernetes/deploy-a-singlestore-db-cluster.html)
 
 Now that your various object definition files are created, you will use
 kubectl to do the actual object creation and cluster deployment.
@@ -971,7 +1006,9 @@ kubectl create -f memsql-cluster-crd.yaml
 
 kubectl create -f deployment.yaml -n\<namespace\>
 
-4.  Verify the deployment was successful by checking the status of the pods in your Kube cluster. You should see the Operator with a status of Running.
+4.  Verify the deployment was successful by checking the status of the
+    > pods in your Kube cluster. You should see the Operator with a
+    > status of Running.
 
 kubectl get pods
 
@@ -979,7 +1016,9 @@ kubectl get pods
 
 kubectl create -f memsql-cluster.yaml
 
-6.  After a couple minutes, run kubectl get pods again to verify the aggregator and leaf nodes all started and have a status of Running.
+6.  After a couple minutes, run kubectl get pods again to verify the
+    > aggregator and leaf nodes all started and have a status of
+    > Running.
 
 kubectl get pods\
 If you see no pods are in the Running state, check the Operator logs by
@@ -1000,17 +1039,20 @@ kubectl get memsqlcluster memsql-cluster \\
 The SingleStore DB server deployment is complete when Running is
 displayed after running the above commands.
 
-2.  Verify the pod list, run the following command to display the pod list.
+2.  Verify the pod list, run the following command to display the pod
+    > list.
 
 kubectl get po -n\<name-space\>
 
 Result may vary:
 
 ![A picture containing text Description automatically
-generated](media/image55.png){width="5.947916666666667in"
+generated](./docs_deploy_aws_media/media/image55.png){width="5.947916666666667in"
 height="1.15625in"}
 
-3.  After the deployment completes, run the following command to display the two SingleStore DB service endpoints that are created during the deployment.
+3.  After the deployment completes, run the following command to display
+    > the two SingleStore DB service endpoints that are created during
+    > the deployment.
 
 kubectl get svc \| grep \<cluster-name\>
 
@@ -1040,10 +1082,10 @@ NAME EXTERNAL-IP PORT(S) AGE
 
 Service name External IP Service Port:Node Port Service created
 
-Refer to [Data Definition Language
-DDL](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-definition-language-ddl/data-definition-language-ddl.html)
-and [Data Manipulation Language
-DML](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-manipulation-language-dml/data-manipulation-language-dml.html)
+Refer to [[Data Definition Language
+DDL]{.underline}](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-definition-language-ddl/data-definition-language-ddl.html)
+and [[Data Manipulation Language
+DML]{.underline}](https://docs.singlestore.com/db/v7.3/en/reference/sql-reference/data-manipulation-language-dml/data-manipulation-language-dml.html)
 for more information.
 
 #  
@@ -1055,11 +1097,14 @@ for more information.
 sudo yum-config-manager \--add-repo
 https://release.memsql.com/production/rpm/x86_64/repodata/memsql.repo
 
-2.  Verify that the SingleStore repo information is listed under repolist.
+2.  Verify that the SingleStore repo information is listed under
+    > repolist.
 
 sudo yum repolist
 
-3.  Verify that the which package is installed. This is used during the install process to identify the correct package type for your installation.
+3.  Verify that the which package is installed. This is used during the
+    > install process to identify the correct package type for your
+    > installation.
 
 rpm -q which
 
@@ -1074,11 +1119,12 @@ sudo yum install -y singlestore-client
 
 ## Access SingleStore DB
 
-1.  Connect via Load Balancer / External IP (refer svc-memsql-cluster-ddl endpoint)
+1.  Connect via Load Balancer / External IP (refer
+    > svc-memsql-cluster-ddl endpoint)
 
 singlestore -u admin -h \<external-ip\> -p
 
-![](media/image56.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image56.png){width="6.267716535433071in"
 height="1.9861111111111112in"}
 
 2.  Connect via Node Port (refer svc-memsql-cluster-ddl endpoint)
@@ -1094,7 +1140,7 @@ kubectl get po node-memsql-cluster-master-0 -n\<namespace\>
 
 singlestore -u admin -h \<host-ip\> -P \<node-port\> -p
 
-![](media/image17.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image17.png){width="6.267716535433071in"
 height="2.1805555555555554in"}
 
 3.  Check status of aggregator and leaf, run the following command
@@ -1105,7 +1151,7 @@ show leaves;
 
 > The result may vary:
 
-![](media/image11.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image11.png){width="6.267716535433071in"
 height="1.1388888888888888in"}
 
 # Scaling
@@ -1122,14 +1168,14 @@ if the scaling is in progress, done or has a problem.
 
 kubectl get memsqlcluster -n\<namespace\>
 
-![](media/image20.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image20.png){width="6.267716535433071in"
 height="0.5833333333333334in"}
 
 3.  Check current spec of MemSQL cluster
 
 kubectl get memsqlcluster memsql-cluster -n\<namespace\> -oyaml
 
-![](media/image12.png){width="2.7630413385826773in"
+![](./docs_deploy_aws_media/media/image12.png){width="2.7630413385826773in"
 height="3.2552088801399823in"}
 
 4.  Definition
@@ -1146,12 +1192,13 @@ Open a new terminal window.
 
 kubectl get po -n\<namespace\>
 
-![](media/image13.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image13.png){width="6.267716535433071in"
 height="1.0972222222222223in"}
 
 kubectl logs memsql-operator-\<x\> -n\<namespace\> -f
 
-![](media/image18.png){width="6.267716535433071in" height="2.0in"}
+![](./docs_deploy_aws_media/media/image18.png){width="6.267716535433071in"
+height="2.0in"}
 
 6.  Monitor the pod during scaling
 
@@ -1159,7 +1206,7 @@ Open a new terminal window
 
 watch kubectl get po -n\<namespace\>
 
-![](media/image14.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image14.png){width="6.267716535433071in"
 height="1.7916666666666667in"}
 
 ## Horizontal Scaling
@@ -1183,12 +1230,13 @@ count: 2
 
 EOF
 
-2.  Apply your changes on memsql cluster by patching the object using patching file
+2.  Apply your changes on memsql cluster by patching the object using
+    > patching file
 
 kubectl patch memsqlcluster memsql-cluster \--type merge \--patch-file
 scaling.yaml -n\<namespace\>
 
-![](media/image15.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image15.png){width="6.267716535433071in"
 height="0.9444444444444444in"}
 
 3.  Verification
@@ -1197,7 +1245,7 @@ New leaves pod created
 
 kubectl get po -n\<namespace\>
 
-![](media/image16.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image16.png){width="6.267716535433071in"
 height="2.7916666666666665in"}
 
 ## Vertical Scaling
@@ -1213,7 +1261,7 @@ than zero
 
 kubectl get deployment memsql-operator -n\<namespace\> -oyaml
 
-![](media/image21.png){width="2.9025426509186354in"
+![](./docs_deploy_aws_media/media/image21.png){width="2.9025426509186354in"
 height="2.338542213473316in"}
 
 **Note**: You can do vertical scaling in the current cluster if and only
@@ -1230,10 +1278,11 @@ Modify the operator configuration
 
 kubectl edit deploy memsql-operator -n\<namespace\>
 
-![](media/image3.png){width="2.2065474628171478in"
+![](./docs_deploy_aws_media/media/image3.png){width="2.2065474628171478in"
 height="1.7552088801399826in"}
 
-2.  Change the number of cores-per-unit or memory-per-unit. Ensure the number greater than zero.
+2.  Change the number of cores-per-unit or memory-per-unit. Ensure the
+    > number greater than zero.
 
 3.  Save the changes
 
@@ -1275,7 +1324,7 @@ kubectl get po -n\<namespace\>\|grep node
 
 sample output:
 
-![](media/image1.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image1.png){width="6.267716535433071in"
 height="0.6111111111111112in"}
 
 3.  Check the resource before changes
@@ -1287,10 +1336,11 @@ kubectl get pods \<pod-name\> -n\<namespace\> -o jsonpath=\\
 
 sample output:
 
-![](media/image2.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image2.png){width="6.267716535433071in"
 height="0.4444444444444444in"}
 
-4.  Apply your changes on memsql cluster by patching the object using patching file
+4.  Apply your changes on memsql cluster by patching the object using
+    > patching file
 
 kubectl patch memsqlcluster memsql-cluster \--type merge \--patch-file
 scaling.yaml -n\<namespace\>
@@ -1304,7 +1354,7 @@ kubectl get pod \<pod-name\> -n\<namespace\> -o jsonpath=\\
 \'{range .spec.containers\[?(@.name==\"node\")\]}{\"Container Name:
 \"}{.name}{\"\\n\"}{\"Requests:\"}{.resources.requests}{\"\\n\"}{\"Limits:\"}{.resources.limits}{\"\\n\"}{end}\'
 
-![](media/image4.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image4.png){width="6.267716535433071in"
 height="0.4444444444444444in"}
 
 ### Storage
@@ -1318,7 +1368,7 @@ a.  The storage class should be allow volume expansion
 
 kubectl get sc \<sc-name\> -oyaml
 
-![](media/image7.png){width="3.1510542432195976in"
+![](./docs_deploy_aws_media/media/image7.png){width="3.1510542432195976in"
 height="2.0989588801399823in"}
 
 b.  Support modifying a Disk Size to a larger size only
@@ -1334,7 +1384,7 @@ kubectl get pvc -n\<namespace\>
 
 kubectl get pv
 
-![](media/image5.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image5.png){width="6.267716535433071in"
 height="0.9722222222222222in"}
 
 3.  Create scaling patch file
@@ -1353,7 +1403,8 @@ storageGB: 25
 
 EOF
 
-4.  Apply your changes on memsql cluster by patching the object using patching file
+4.  Apply your changes on memsql cluster by patching the object using
+    > patching file
 
 kubectl patch memsqlcluster memsql-cluster \--type merge \--patch-file
 scaling.yaml -n\<namespace\>
@@ -1366,7 +1417,7 @@ kubectl get pvc -n\<namespace\>
 
 kubectl get pv
 
-![](media/image6.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image6.png){width="6.267716535433071in"
 height="0.9722222222222222in"}
 
 ### Troubleshoot
@@ -1375,7 +1426,7 @@ height="0.9722222222222222in"}
 
 kubectl describe pvc \<pvc-name\> -n\<namespace\>
 
-![](media/image8.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image8.png){width="6.267716535433071in"
 height="1.2916666666666667in"}
 
 Error message in pod operator:
@@ -1396,7 +1447,8 @@ Solution:
 
 kubectl delete po \<pod-name\> -n\<namespace\>
 
-2.  Downsizing the replicas on related statefulset if option 1 doesn't effect:
+2.  Downsizing the replicas on related statefulset if option 1 doesn't
+    > effect:
 
 kubectl -n\<namespace\> patch sts \<statefulset-name\> \--type merge -p
 \'{\"spec\":{\"replicas\": 0}}\'
@@ -1412,7 +1464,7 @@ Result:
 # Monitoring
 
 Reference:
-[https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html)
+[[https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html]{.underline}](https://docs.singlestore.com/db/v7.6/en/user-and-cluster-administration/cluster-health-and-performance/monitoring/configure-monitoring.html)
 
 ## Introduction
 
@@ -1432,7 +1484,7 @@ database.
 
 ## High-Level Architecture
 
-![](media/image10.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image10.png){width="6.267716535433071in"
 height="1.9444444444444444in"}
 
 In SingleStore's native monitoring solution, the Metrics cluster
@@ -1476,15 +1528,20 @@ The provided Grafana dashboards include:
 
 ## Prerequisites
 
-1.  A SingleStore DB 7.3 or later cluster to monitor (the Source cluster)
+1.  A SingleStore DB 7.3 or later cluster to monitor (the Source
+    > cluster).
 
-2.  Optional: A separate SingleStore DB 7.3 or later cluster to collect monitoring data (the Metrics cluster)
+2.  Optional: A separate SingleStore DB 7.3 or later cluster to collect
+    > monitoring data (the Metrics cluster).
 
     a.  This can be the same as, or separate from, the Source cluster.
 
-    b.  If you opt to use a separate cluster, we recommend a cluster with two aggregator nodes and two leaf nodes, each with 2TB disks and with high availability (HA) enabled.
+    b.  If you opt to use a separate cluster, we recommend a cluster
+        > with two aggregator nodes and two leaf nodes, each with 2TB
+        > disks and with high availability (HA) enabled.
 
-3.  A Grafana 6.0.0 or later instance that can access the Metrics cluster.
+3.  A Grafana 6.0.0 or later instance that can access the Metrics
+    > cluster.
 
 ##  
 
@@ -1506,11 +1563,12 @@ The provided Grafana dashboards include:
 
 1.  Check the exporter's port
 
-> kubectl exec -it \<master-pod\> -n\<namespace\> \-- curl -v telnet://node-memsql-cluster-master-0:9104
+> kubectl exec -it \<master-pod\> -n\<namespace\> \-- curl -v
+> telnet://node-memsql-cluster-master-0:9104
 
 Sample output:
 
-![](media/image9.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image9.png){width="6.267716535433071in"
 height="0.5277777777777778in"}
 
 2.  Test the metrics
@@ -1519,7 +1577,7 @@ curl http://node-memsql-cluster-master-0:9104
 
 Sample output:
 
-![](media/image36.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image36.png){width="6.267716535433071in"
 height="1.2916666666666667in"}
 
 ## Configure the metrics Database
@@ -1528,7 +1586,7 @@ height="1.2916666666666667in"}
 
 Download the sql file below, extract and run in metric DB.
 
-[metrics-database-ddl_73.sql](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/metrics-database-ddl_73.sql.zip)
+[[metrics-database-ddl_73.sql]{.underline}](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/metrics-database-ddl_73.sql.zip)
 
 ### Create monitoring user
 
@@ -1540,7 +1598,7 @@ mysql -u admin -h \<hostname or ip\> -P \<port\> -p
 
 Sample output:
 
-![](media/image30.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image30.png){width="6.267716535433071in"
 height="1.7083333333333333in"}
 
 2.  Create the monitoring user
@@ -1556,7 +1614,9 @@ CREATE USER \'dbmon\'@\'%\' IDENTIFIED BY \<password\>\';
 **Note**: You must edit exporter-host and port in the following SQL
 statements to align with where your exporter process resides.
 
-1.  The exporter-host is typically the host of your Source cluster's Master Aggregator that's running the exporter and must include http://.
+1.  The exporter-host is typically the host of your Source cluster's
+    > Master Aggregator that's running the exporter and must include
+    > http://.
 
 2.  The default port for the endpoint is 9104.
 
@@ -1566,7 +1626,7 @@ statements to align with where your exporter process resides.
 
 > show aggregators;
 
-![](media/image33.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image33.png){width="6.267716535433071in"
 height="0.7638888888888888in"}
 
 2.  Create the pipeline
@@ -1583,7 +1643,7 @@ height="0.7638888888888888in"}
 >
 > Sample output:
 
-![](media/image34.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image34.png){width="6.267716535433071in"
 height="1.0833333333333333in"}
 
 3.  Test and verify the pipeline
@@ -1592,7 +1652,7 @@ height="1.0833333333333333in"}
 >
 > You should see some data after running that command.
 
-![](media/image35.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image35.png){width="6.267716535433071in"
 height="2.888888888888889in"}
 
 4.  Run the pipeline
@@ -1616,7 +1676,7 @@ height="2.888888888888889in"}
 >
 > Sample output:
 
-![](media/image37.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image37.png){width="6.267716535433071in"
 height="1.8194444444444444in"}
 
 2.  Test and verify the pipeline
@@ -1632,7 +1692,8 @@ height="1.8194444444444444in"}
 If you see some error like below screenshot, please double check the
 exporter-host
 
-![](media/image41.png){width="6.267716535433071in" height="0.5in"}
+![](./docs_deploy_aws_media/media/image41.png){width="6.267716535433071in"
+height="0.5in"}
 
 Drop the existing pipeline and recreate the pipeline
 
@@ -1640,7 +1701,8 @@ DROP PIPELINE metrics;
 
 Sample output:
 
-![](media/image54.png){width="5.020833333333333in" height="0.625in"}
+![](./docs_deploy_aws_media/media/image54.png){width="5.020833333333333in"
+height="0.625in"}
 
 ## Grafana
 
@@ -1656,14 +1718,15 @@ We will install grafana using helm chart
 
 > You need to modify pvc section:
 >
-> storageClassName \> your default storage class name available in your k8s environment
+> storageClassName \> your default storage class name available in your
+> k8s environment
 >
 > existingClaim \> you need it if you have more than one pvc for grafana
 
 cat \> grafana.yaml \<\<EOF
 
 \## Expose the grafana service to be accessed from outside the cluster
-(LoadBalancer service)
+(LoadBalancer service).
 
 \## or access it from within the cluster (ClusterIP service). Set the
 service type and the port to serve it.
@@ -1748,7 +1811,7 @@ b.  Multibar Graph Panel
 >
 > Sample output:
 
-![](media/image39.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image39.png){width="6.267716535433071in"
 height="1.1527777777777777in"}
 
 3.  Delete grafana pod to restart the service
@@ -1765,7 +1828,8 @@ Add the grafana monitoring datasource
 >
 > Sample output:
 
-![](media/image43.png){width="6.267716535433071in" height="0.625in"}
+![](./docs_deploy_aws_media/media/image43.png){width="6.267716535433071in"
+height="0.625in"}
 
 2.  Access the url
 
@@ -1780,27 +1844,29 @@ Add the grafana monitoring datasource
 >
 > Sample output:
 
-![](media/image32.png){width="6.267716535433071in" height="0.25in"}
+![](./docs_deploy_aws_media/media/image32.png){width="6.267716535433071in"
+height="0.25in"}
 
 4.  Login
 
 > Log in using admin as the username and the password.
 
-![](media/image26.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image26.png){width="6.267716535433071in"
 height="4.444444444444445in"}
 
 ### Datasource
 
 1.  Add a monitoring MySQL data source with the following settings.
 
-    a.  Click the gear icon in the side menu, and then click **Datasource**. Then Click **Add data source button**.
+    a.  Click the gear icon in the side menu, and then click
+        > **Datasource**. Then Click **Add data source button**.
 
-> ![](media/image25.png){width="4.941772747156605in"
+> ![](./docs_deploy_aws_media/media/image25.png){width="4.941772747156605in"
 > height="3.6718755468066493in"}
 
 b.  Type *mysql* on filter box, then click **Select** button.
 
-![](media/image23.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image23.png){width="6.267716535433071in"
 height="4.180555555555555in"}
 
 c.  FIll out the form.
@@ -1819,21 +1885,23 @@ c.  FIll out the form.
 >
 > Password: \<secure-password-or-blank-if-none\>
 
-![](media/image28.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image28.png){width="6.267716535433071in"
 height="4.597222222222222in"}
 
 d.  Click **Save & test** button.
 
-![](media/image27.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image27.png){width="6.267716535433071in"
 height="2.888888888888889in"}
 
 ###  
 
 ### Dashboard
 
-1.  Download the cluster monitoring dashboards from SingleStore and extract the downloaded file [cluster-monitoring-dashboards-73.zip](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/cluster-monitoring-dashboards-73.zip)
+1.  Download the cluster monitoring dashboards from SingleStore and
+    > extract the downloaded file
+    > [[cluster-monitoring-dashboards-73.zip]{.underline}](https://archived.docs.singlestore.com/files/cluster-monitoring-guide/cluster-monitoring-dashboards-73.zip)
 
-![](media/image24.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image24.png){width="6.267716535433071in"
 height="1.8055555555555556in"}
 
 2.  Import the dashboards into Grafana.
@@ -1847,17 +1915,21 @@ b.  From here you can upload a dashboard JSON file.
 
 c.  Click **Upload JSON file button**
 
-![](media/image29.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image29.png){width="6.267716535433071in"
 height="4.291666666666667in"}
 
 3.  Click **Import** button
 
-![](media/image38.png){width="6.267716535433071in"
+![](./docs_deploy_aws_media/media/image38.png){width="6.267716535433071in"
 height="4.763888888888889in"}
 
 4.  View the Dashboards
 
-> When all cluster monitoring components are installed, configured, and running, the Grafana dashboards can be used to monitor SingleStore DB cluster health over time.![](media/image31.png){width="5.830295275590551in" height="3.682292213473316in"}
+> When all cluster monitoring components are installed, configured, and
+> running, the Grafana dashboards can be used to monitor SingleStore DB
+> cluster health over
+> time.![](./docs_deploy_aws_media/media/image31.png){width="5.830295275590551in"
+> height="3.682292213473316in"}
 
 # Rollback/Cleanup
 
@@ -1866,36 +1938,39 @@ height="4.763888888888889in"}
 Skip this step if you want to retain the AKS cluster for another
 application
 
-1.  Login to [Azure portal](https://portal.azure.com/#home)
+1.  Login to [[Azure
+    > portal]{.underline}](https://portal.azure.com/#home).
 
 2.  In Home page search for Kubernetes service.
 
-![AKS_Service](media/image19.jpg){width="6.267716535433071in"
+![AKS_Service](./docs_deploy_aws_media/media/image19.jpg){width="6.267716535433071in"
 height="1.3472222222222223in"}
 
-3.  Click on the Kubernetes Service and choose the Kubernetes Cluster you want to delete.
+3.  Click on the Kubernetes Service and choose the Kubernetes Cluster
+    > you want to delete.
 
-![AKS_Choose_kubernetes_Cluster](media/image22.jpg){width="6.267716535433071in"
+![AKS_Choose_kubernetes_Cluster](./docs_deploy_aws_media/media/image22.jpg){width="6.267716535433071in"
 height="1.9027777777777777in"}
 
-4.  Click on the **Delete** option on the right side top as shown in figure.
+4.  Click on the **Delete** option on the right side top as shown in
+    > figure.
 
-![AKS_Kubernetes_Cluster-Delete](media/image40.jpg){width="6.267716535433071in"
+![AKS_Kubernetes_Cluster-Delete](./docs_deploy_aws_media/media/image40.jpg){width="6.267716535433071in"
 height="1.5972222222222223in"}
 
 5.  Confirm the **delete** operation by pressing \"Yes\" button.
 
-![AKS_Kubernetes_Cluster-Delete_confirm](media/image42.jpg){width="6.267716535433071in"
+![AKS_Kubernetes_Cluster-Delete_confirm](./docs_deploy_aws_media/media/image42.jpg){width="6.267716535433071in"
 height="1.7777777777777777in"}
 
 6.  Check the **Delete** operation status.
 
-![AKS_Kubernetes_Cluster-Delete_status](media/image45.jpg){width="6.267716535433071in"
+![AKS_Kubernetes_Cluster-Delete_status](./docs_deploy_aws_media/media/image45.jpg){width="6.267716535433071in"
 height="1.4861111111111112in"}
 
 ## SingleStore DB
 
-Skip this step if you did the previous step (delete AKS cluster)
+Skip this step if you did the previous step (delete AKS cluster).
 
 1.  Delete all Kubernetes object using helm command
 
@@ -1980,6 +2055,7 @@ memsqlctl show-aggregators
 List leaves node:
 
 memsqlctl show-leaves
+
 
 # Deployment Artifacts
 Deployment related files can be found at [https://github.com/sdb-cloud-ops/AWS](https://github.com/sdb-cloud-ops/AWS)
