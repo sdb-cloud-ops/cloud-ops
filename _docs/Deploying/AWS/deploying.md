@@ -50,30 +50,30 @@ Create two roles
 Reference:
 [https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html)
 
-3.  Open the IAM console at [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/)
+1.  Open the IAM console at [https://console.aws.amazon.com/iam/](https://console.aws.amazon.com/iam/)
 
-4.  In the left navigation pane, choose **Roles**.
+2.  In the left navigation pane, choose **Roles**.
 
-5.  Search the list of roles for **eksClusterRole**.
- If a role that includes **eksClusterRole** doesn't exist, then continue the next step to create the role else skip the rest of steps.
+3.  Search the list of roles for **eksClusterRole**.
+If a role that includes **eksClusterRole** doesn't exist, then continue the next step to create the role else skip the rest of steps.
 
-6.  Click **Create role**
+4.  Click **Create role**
 
     ![](../../assets/img/docs_deploy_aws_media/media/image57.png)
 
-7.  **Select trusted entity**
+5.  **Select trusted entity**
 
-8.  Select **AWS service**
+6.  Select **AWS service**
 
-9.  Select **EKS - Cluster** as **Use cases**
+7.  Select **EKS - Cluster** as **Use cases**
 
     ![](../../assets/img/docs_deploy_aws_media/media/image60.png)
 
-10. **Add permissions**
+8. **Add permissions**
 
     ![](../../assets/img/docs_deploy_aws_media/media/image58.png)
 
-11. **Name, review, and create**
+10. **Name, review, and create**
 
     ![](../../assets/img/docs_deploy_aws_media/media/image59.png)
 
@@ -91,7 +91,7 @@ Assign all \*EKS\* managed policy to the role
 2.  In the left navigation pane, choose **Roles**.
 
 3.  Search the list of roles for **AWSServiceRoleForAmazonEKSNodegroup**.
- If a role that includes **AWSServiceRoleForAmazonEKSNodegroup** doesn't exist, then continue the next step to create the role else skip the rest of steps.
+If a role that includes **AWSServiceRoleForAmazonEKSNodegroup** doesn't exist, then continue the next step to create the role else skip the rest of steps.
 
 4.  Click **Create role**
 
@@ -161,79 +161,44 @@ Reference:
 
     ![](../../assets/img/docs_deploy_aws_media/media/image72.png)
 
-
+```json
         {
-
             "Version": "2012-10-17",
-
             "Statement": [
-
                 {
-
                     "Sid": "VisualEditor0",
-
                     "Effect": "Allow",
-
                     "Action": [
-
                         "iam:ListRoles",
-
                         "ec2:DescribeSubnets",
-
                         "eks:CreateCluster"
-
                     ],
-
                     "Resource": "*"
-
                 },
-
                 {
-
                     "Sid": "VisualEditor1",
-
                     "Effect": "Allow",
-
                     "Action": [
-
                         "eks:DeleteCluster",
-
                         "iam:GetRole",
-
                         "iam:PassRole",
-
                         "iam:ListAttachedRolePolicies",
-
                         "eks:DeleteNodegroup",
-
                         "eks:TagResource",
-
                         "eks:DescribeCluster",
-
                         "eks:CreateNodegroup"
-
                     ],
-
                     "Resource": [
-
                         "arn:aws:iam::[account-id]:role/AmazonEKSNodeRole",
-
                         "arn:aws:iam::[account-id]:role/eksClusterRole",
-
                         "arn:aws:iam::[account-id]:role/*AWSServiceRoleForAmazonEKSNodegroup",
-
                         "arn:aws:eks:us-east-1:[account-id]:nodegroup/eks-cluster/*/*",
-
                         "arn:aws:eks:us-east-1:[account-id]:cluster/eks-cluster"
-
                     ]
-
                 }
-
             ]
-
         }
-
+```
 
 5.  **Review policy**, put name **eks-policy**
 
@@ -267,15 +232,12 @@ Reference:
 [https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
 
 1.  Define
-
-    region-code
-
-    cluster-name
-
-    account_id
-
-    subnetId
-
+```
+region-code
+cluster-name
+account_id
+subnetId
+```
 2.  Create cluster
 
     Use comma as delimiter if you have more than one subnet
@@ -358,21 +320,17 @@ Reference:
 [https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html#aws-cli)
 
 1.  Define
-
-    region-code
-
-    cluster-name
-
-    account_id
-
-    subnetId
+`region-code`
+`cluster-name`
+`account_id`
+`subnetId`
 
 2.  Create node group
 
     Use space as delimiter if you have more than one subnet
 
     Create node group with the following command:
-
+```console
         aws eks create-nodegroup \
         --cluster-name cluster-name \
         --region region-code \
@@ -381,7 +339,7 @@ Reference:
         --instance-types t2.large \
         --subnets subnetId1 subnetId2 \
         --node-role arn:aws:iam::\[accountId\]:role/AmazonEKSNodeRole
-
+```
     ![](../../assets/img/docs_deploy_aws_media/media/image48.png)
 
     This process may take several minutes.
@@ -1457,58 +1415,51 @@ Add the grafana monitoring datasource
 
 # Rollback/Cleanup
 
-## AKS Cluster
+## EKS Cluster
 
-Skip this step if you want to retain the AKS cluster for another
+Skip this step if you want to retain the EKS cluster for another
 application
-
-1.  Login to [Azure portal](https://portal.azure.com/#home)
-
-2.  In Home page search for Kubernetes service.
-
-    ![AKS_Service](../../assets/img/docs_deploy_aws_media/media/image19.jpg)
-
-3.  Click on the Kubernetes Service and choose the Kubernetes Cluster you want to delete.
-
-    ![AKS_Choose_kubernetes_Cluster](../../assets/img/docs_deploy_aws_media/media/image22.jpg)
-
-4.  Click on the **Delete** option on the right side top as shown in figure.
-
-    ![AKS_Kubernetes_Cluster-Delete](../../assets/img/docs_deploy_aws_media/media/image40.jpg)
-
-5.  Confirm the **delete** operation by pressing "Yes" button.
-
-    ![AKS_Kubernetes_Cluster-Delete_confirm](../../assets/img/docs_deploy_aws_media/media/image42.jpg)
-
-6.  Check the **Delete** operation status.
-
-    ![AKS_Kubernetes_Cluster-Delete_status](../../assets/img/docs_deploy_aws_media/media/image45.jpg)
-
+### Node Group
+```
+aws eks delete-nodegroup \
+--cluster-name cluster-name \
+--region region-code \
+--nodegroup-name ng-1
+```
+### Cluster
+```
+aws eks delete-cluster \
+  --region region-code \
+  --name cluster-name
+```
 ## SingleStore DB
 
-Skip this step if you did the previous step (delete AKS cluster).
-
-1.  Delete all Kubernetes object using helm command
-
-        helm delete singlestore -n<namespaces>
-
-2.  Clean up the PersistentVolumeClaim
-
-    Run the below command:
-
-        kubectl delete pvc --all -n<namespaces>
-
-3.  Clean up the CustomResourceDefinition
-
-    Run the below command:
-
-        kubectl delete crd MemsqlCluster
-
-4.  Clean up the Namespaces
-
-    Run the below command:
-
-        kubectl delete ns <namespaces>
+This step is no longer required if you did the previous step (delete EKS cluster).
+ 
+1. Delete the cluster.
+``` 
+kubectl delete -f memsql-cluster.yaml -n<namespace>
+```
+2. Clean up the PersistentVolumeClaim
+```
+kubectl delete pvc --all -n<namespace>
+```
+3. Delete the Operator.
+```
+kubectl delete -f deployment.yaml -n<namespace>
+```
+4. Delete RBAC
+```
+kubectl create -f rbac.yaml -n<namespace>
+```
+5. Delete the MemSQL custom resource definition.
+```
+kubectl create -f memsql-cluster-crd.yaml
+```
+6. Clean up the Namespaces
+```
+kubectl delete ns <namespaces>
+```
 
 # Useful Command
 
