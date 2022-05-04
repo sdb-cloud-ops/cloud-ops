@@ -4,11 +4,9 @@ title: CloudOps Documentation
 permalink: /
 ---
 
-# Welcome to Cloud Ops team's documentation pages
+# Welcome to Cloud Operations documentation pages
 
-We are a dedicated cloud hybrid team that focuses on CTS tooling development and augmenting professional services with cloud skill sets.
-
-Our team consists of different roles that support Cloud technologies including Cloud Solutions Engineers, Cloud Operations Engineers, and Software Developers.
+This documentation contains the best practices and guidance to the SingelStore Field team on how to stand up production capable environments for CSP platforms and customer on-prem infrastructure.
 
 Please use the left menu to navigate through the site.
 
